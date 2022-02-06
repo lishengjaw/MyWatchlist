@@ -1,0 +1,51 @@
+.discover-movies-list,
+.discover-tv-shows-list
+{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 1rem;
+    justify-content: space-between;
+}
+
+.discover h1
+{
+    margin: 10px 0 30px;
+    text-align: center;
+    background-color: #0d253f;
+    color: whitesmoke;
+    padding: 3px 0 8px;
+    border-radius: 10px;
+}
+
+.info{
+    display: flex;
+}
+
+.info svg{
+    position: relative;
+    top: 5px;
+    left: -5px;
+    color: #0d253f;
+}
+
+.discover-no-search-results{
+    display: flex;
+    height: calc(100vh - 164px);
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+}
+
+@media screen and (max-width: 1024px) {
+    .discover-movies-list,
+    .discover-tv-shows-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .discover-movies-list,
+    .discover-tv-shows-list {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

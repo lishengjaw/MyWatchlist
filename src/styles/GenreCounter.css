@@ -1,0 +1,15 @@
+.genre-counter{
+    flex: 0.2;
+    border-radius: 10px;
+    background-image: linear-gradient(#0d253f, black);
+    color: whitesmoke;
+    padding: 15px;
+    text-align: center;
+    height: fit-content;
+    min-width: 200px;
+}
+
+.genre-counter h2{
+    color: yellow;
+    margin-bottom: 20px;
+}

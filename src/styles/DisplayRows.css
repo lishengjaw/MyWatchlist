@@ -1,0 +1,53 @@
+.display-row{
+    height: 90px;
+    background-color: rgb(13, 37, 63, 0.05);
+    margin: 5px;
+    padding: 10px 20px;
+    display: flex;
+    border-radius: 10px;
+}
+
+.display-row-left{
+    flex: 0.1;
+}
+
+.display-row-left img{
+    height: 100%;
+    margin-right: 2vw
+}
+
+.display-row-center{
+    flex: 0.8;
+}  
+
+.display-row-center h4{
+    color: #0d253f;
+}
+
+.display-row-center span{
+    margin-right: 1rem;
+    color: lightgrey;
+    font-size: 0.9rem;
+}
+
+.display-row-center > div{
+    display: flex;
+}
+
+.display-row-right{
+    flex: 0.1;
+    display: flex;
+    align-items: center;
+}
+
+.display-row-right h6{
+    padding: 5px;
+    border-radius: 5px;
+    color: black;
+    margin-right: 20px;
+    margin-bottom: 0;
+}
+
+.display-row-right svg{
+    font-size: 1.5rem;
+}

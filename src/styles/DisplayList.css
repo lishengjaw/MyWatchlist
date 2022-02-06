@@ -1,0 +1,11 @@
+.list-no-search-results{
+    display: flex;
+    height: calc(100vh - 104px);
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+}
+
+.display-list{
+    flex: 0.8;
+}

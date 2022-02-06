@@ -1,0 +1,85 @@
+.modal-content{
+    color: whitesmoke;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none;
+}
+
+.modal-header{
+    border: none;
+    background-color: rgb(128, 128, 128, 0.8);
+    padding: 0;
+}
+
+.modal-header > button{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 999;
+    background-color: whitesmoke !important;
+}
+
+.modal-subheader{
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    margin: 10px 0;
+}
+
+.modal-subheader h6{
+    padding: 5px;
+    border-radius: 5px;
+    color: black;
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+
+.modal-subheader h6:not(:first-child){
+    background-color: lightgrey;
+}
+
+.modal-icon{
+    background-color: rgb(13, 37, 63, 0.3);
+    border-radius: 50%;
+    height: 3rem;
+    width: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+    font-size: 1.5rem;
+}
+
+.modal-icon a{
+    width: 20px;
+    height: 45px;
+}
+
+.modal-body{
+    display: flex;
+    background-color: rgb(128, 128, 128, 0.8);
+    border-radius: 0.3rem;
+    padding-bottom: 30px;
+}
+
+.modal-info{
+    padding: 0 30px;
+}
+
+.modal-info a{
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.modal-people{
+    display: flex;
+}
+
+.modal-directors{
+    flex: 0.5;
+}
+
+.modal-casts{
+    flex: 0.5;
+}
