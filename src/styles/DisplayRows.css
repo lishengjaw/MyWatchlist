@@ -22,6 +22,7 @@
 
 .display-row-center h4{
     color: #0d253f;
+    font-size: 1.2rem;
 }
 
 .display-row-center span{
@@ -50,4 +51,15 @@
 
 .display-row-right svg{
     font-size: 1.5rem;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {    
+    .display-row-center h4{
+        font-size: 1rem;
+    }
+
+    .display-row-center span{
+        font-size: 0.8rem;
+    }
 }

@@ -16,6 +16,9 @@ const DisplayRows = (props) => {
     date,
     vote_average,
     genre_names,
+    start_date,
+    end_date,
+    status
   } = props.data;
 
   const isFavourite = props.isFavourite;
@@ -23,6 +26,8 @@ const DisplayRows = (props) => {
 
   const [iconState, setIconState] = useState(isFavourite || toWatchLater);
   const year = date?.split("-")[0];
+  const start_year = start_date?.split("-")[0];
+  const end_year = end_date?.split("-")[0];
 
   const selectRatingColor = (vote_average) => {
     if (vote_average >= 9.0) {
@@ -69,7 +74,10 @@ const DisplayRows = (props) => {
 
       <div className="display-row-center">
         <h4>
-          {`${title}`} {year && `(${year})`}
+            {year && `${title} (${year})`}
+            {start_year && `${title} (${start_year}`}
+            {end_year && status === "Ended" && `-${end_year})`}
+            {end_year && status === "Returning Series" && "-Present)"}
         </h4>
         <div>
           {genre_names?.map((genre, index) => (

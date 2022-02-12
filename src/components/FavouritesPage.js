@@ -6,6 +6,8 @@ import "../styles/FavouritesPage.css";
 
 const FavouritesPage = () => {
   const [favouritesList, setFavouritesList] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('Loading favourites...');
+  
   useEffect(() => {
     db.collection("favourites")
       .orderBy("timestamp", "desc")
@@ -19,6 +21,12 @@ const FavouritesPage = () => {
       });
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setErrorMessage('No favourites found');
+    }, 5000)
+  }, [])
+
   return (
     <div className="background">
       {favouritesList && favouritesList.length > 0 ? (
@@ -30,7 +38,7 @@ const FavouritesPage = () => {
           </div>
         </div>
       ) : (
-        <h1 className="list-no-search-results">No favourites found</h1>
+        <h1 className="list-no-search-results">{errorMessage}</h1>
       )}
     </div>
   );

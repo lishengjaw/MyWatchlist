@@ -6,6 +6,8 @@ import "../styles/WatchLaterPage.css";
 
 const WatchLaterPage = () => {
   const [watchLaterList, setWatchLaterList] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('Loading watch laters...')
+
   useEffect(() => {
     db.collection("watch-later")
       .orderBy("timestamp", "desc")
@@ -18,18 +20,25 @@ const WatchLaterPage = () => {
         );
       });
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setErrorMessage('No watch laters found')
+    }, 5000)
+  }, [])
+
   return (
     <div className="background">
       {watchLaterList && watchLaterList.length > 0 ? (
         <div className="watch-later-page">
-          <h1>My Favourites</h1>
+          <h1>My Watch Later</h1>
           <div className="watch-later-body">
             <GenreCounter temp={watchLaterList} />
             <DisplayList favourites={false} temp={watchLaterList} />
           </div>
         </div>
       ) : (
-        <h1 className="list-no-search-results">No favourites found</h1>
+        <h1 className="list-no-search-results">{errorMessage}</h1>
       )}
     </div>
   );

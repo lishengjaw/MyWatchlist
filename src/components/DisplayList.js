@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 const DisplayList = (props) => {
   const { temp, favourites } = props;
   const [list, setList] = useState(temp);
-  console.log(favourites);
   useEffect(() => {
     setList(temp);
   }, [temp]);

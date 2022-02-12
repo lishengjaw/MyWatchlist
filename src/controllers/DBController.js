@@ -24,7 +24,7 @@ const checkInWatchLater = (id) => {
 };
 
 const addToFavourites = (props) => {
-  const { isFavourite, toWatchLater, ...favouriteItem } = props;
+  const { isFavourite, toWatchLater, casts, directors, video_key, number_of_episodes, number_of_seasons, ...favouriteItem } = props;
   db.collection("favourites")
     .add({
       ...favouriteItem,
@@ -44,7 +44,7 @@ const removeFromFavourites = (props) => {
 };
 
 const addToWatchLater = (props) => {
-  const { isFavourite, toWatchLater, ...watchLaterItem } = props;
+  const { isFavourite, toWatchLater, casts, directors, video_key, number_of_episodes, number_of_seasons, ...watchLaterItem } = props;
   db.collection("watch-later")
     .add({
       ...watchLaterItem,

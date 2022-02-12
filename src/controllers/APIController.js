@@ -78,22 +78,15 @@ const getCastsAndDirectors = async (id, isMovie) => {
       }/${id}/credits?api_key=${process.env.REACT_APP_API_KEY}`
     );
     const data = await res.json();
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < data.cast.length; i++) {
       if (data.cast[i] && data.cast[i].name) {
         const { name } = data.cast[i];
         casts.push(name);
       }
     }
     for (let i = 0; i < data.crew.length; i++) {
-      const { id, name, job, known_for_department } = data.crew[i];
+      const { id, name, job } = data.crew[i];
       if (isMovie && job === "Director" && !set.has(id)) {
-        directors.push(name);
-        set.add(id);
-      } else if (
-        !isMovie &&
-        known_for_department === "Directing" &&
-        !set.has(id)
-      ) {
         directors.push(name);
         set.add(id);
       }
@@ -124,6 +117,18 @@ const getVideo = async (id, isMovie) => {
   }
 };
 
+const getOtherTVShowsDetails = async (id) => {
+  try {
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URL}/tv/${id}?api_key=${process.env.REACT_APP_API_KEY}`
+    );
+    const otherTVShowsDetails = await res.json();
+    return otherTVShowsDetails;
+  } catch (err) {
+    alert(err);
+  }
+};
+
 export {
   getDiscoverMovies,
   searchDiscoverMovies,
@@ -132,4 +137,5 @@ export {
   getGenres,
   getCastsAndDirectors,
   getVideo,
+  getOtherTVShowsDetails,
 };

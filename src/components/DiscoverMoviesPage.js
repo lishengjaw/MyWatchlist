@@ -20,7 +20,7 @@ import { selectSearchText } from "../features/searchTextSlice";
 
 const DiscoverPage = () => {
   const [discoverMoviesList, setDiscoverMoviesList] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("Trying to load movies...");
+  const [errorMessage, setErrorMessage] = useState("Loading movies...");
   const clickedItem = useSelector(selectClickedItem);
   const activePage = useSelector(selectActivePage);
   const searchText = useSelector(selectSearchText);
@@ -84,9 +84,9 @@ const DiscoverPage = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setErrorMessage("No movies found")
-    }, 5000)
-  }, [])
+      setErrorMessage("No movies found");
+    }, 5000);
+  }, []);
 
   return (
     <div className="background">

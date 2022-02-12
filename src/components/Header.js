@@ -4,7 +4,7 @@ import { FaFilm } from "react-icons/fa";
 
 const Header = () => {
   return (
-    <Navbar>
+    <Navbar expand="md">
       <Container>
         <Navbar.Brand href="/">
           <FaFilm />

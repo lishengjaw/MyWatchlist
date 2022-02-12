@@ -21,9 +21,18 @@
     justify-content: space-around;
     align-items: center;
     flex: 0.1;
+    font-size: 1.5rem;
 }
 
 .navbar-nav > a:hover{
     transition: 0.5s ease-in-out;
     color: #01b4e4 !important;
+}
+
+.navbar-toggler-icon{
+    background-image: url('data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 30 30%27><path stroke=%27rgba%280, 255, 255, 0.55%29%27 stroke-linecap=%27round%27 stroke-miterlimit=%2710%27 stroke-width=%272%27 d=%27M4 7h22M4 15h22M4 23h22%27/></svg>') !important;
+}
+
+.navbar-toggler:focus{
+    box-shadow: none;
 }

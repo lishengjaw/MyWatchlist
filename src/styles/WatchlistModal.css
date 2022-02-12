@@ -4,6 +4,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     border: none;
+    width: fit-content;
 }
 
 .modal-header{
@@ -25,35 +26,43 @@
     align-items: center;
     font-size: 0.8rem;
     margin: 10px 0;
+    flex-wrap: wrap;
 }
 
 .modal-subheader h6{
     padding: 5px;
     border-radius: 5px;
     color: black;
-    margin-right: 10px;
-    margin-bottom: 0;
+    margin: 0 10px 0 0;
 }
 
 .modal-subheader h6:not(:first-child){
     background-color: lightgrey;
 }
 
+.modal-icons{
+    display: flex;
+    width: 8rem;
+    justify-content: space-between;
+    align-items: center;
+    height: 3rem;
+}
+
 .modal-icon{
     background-color: rgb(13, 37, 63, 0.3);
     border-radius: 50%;
-    height: 3rem;
-    width: 3rem;
+    height: 2rem;
+    width: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 10px;
-    font-size: 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
 }
 
-.modal-icon a{
-    width: 20px;
-    height: 45px;
+.modal-icons a{
+    width: 15px;
+    height: 30px;
 }
 
 .modal-body{
@@ -72,8 +81,20 @@
     text-decoration: none;
 }
 
+.modal-status{
+    display: flex;
+}
+
+.modal-status p{
+    background-color:rgb(13, 37, 63, 0.5);
+    margin: -10px 10px 10px 0;
+    padding: 5px;
+    border-radius: 5px;
+}
+
 .modal-people{
     display: flex;
+    font-weight: 100;
 }
 
 .modal-directors{
@@ -82,4 +103,11 @@
 
 .modal-casts{
     flex: 0.5;
+}
+
+.modal-casts button{
+    border: none;
+    background-color: transparent;
+    font-weight: bold;
+    color: #0d253f;
 }

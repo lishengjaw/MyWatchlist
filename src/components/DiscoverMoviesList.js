@@ -24,7 +24,6 @@ const DiscoverMoviesList = (props) => {
       </div>
       <div className="discover">
         <h1>Movies</h1>
-        {discoverMoviesList.length === 0 && <h3>No movies found</h3>}
         <div className="discover-movies-list">
           {discoverMoviesList.map((item) => {
             const { id } = item;

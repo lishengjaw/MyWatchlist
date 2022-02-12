@@ -8,6 +8,7 @@ import {
   getCastsAndDirectors,
   getDiscoverTVShows,
   getGenres,
+  getOtherTVShowsDetails,
   getVideo,
   searchDiscoverTVShows,
 } from "../controllers/APIController";
@@ -20,7 +21,7 @@ import {
 
 const DiscoverPage = () => {
   const [discoverTVShowsList, setDiscoverTVShowsList] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("Trying to load TV shows...");
+  const [errorMessage, setErrorMessage] = useState("Loading TV shows...");
   const clickedItem = useSelector(selectClickedItem);
   const searchText = useSelector(selectSearchText);
   const activePage = useSelector(selectActivePage);
@@ -50,19 +51,34 @@ const DiscoverPage = () => {
             } = item;
 
             const genre_names = await getGenres(genre_ids, false);
-            const { casts, directors } = await getCastsAndDirectors(id, false);
+            const { casts } = await getCastsAndDirectors(id, false);
             const video_key = await getVideo(id, false);
+            const {
+              created_by,
+              last_air_date,
+              number_of_episodes,
+              number_of_seasons,
+              status,
+            } = await getOtherTVShowsDetails(id);
+            const directors = created_by.map((director) => {
+              return director.name;
+            });
+
             return {
               genre_names,
               id,
               title: name,
               overview,
               poster_path,
-              date: first_air_date,
+              start_date: first_air_date,
+              end_date: last_air_date,
               vote_average,
               casts,
               directors,
               video_key,
+              number_of_episodes,
+              number_of_seasons,
+              status,
             };
           })
         );
@@ -86,9 +102,9 @@ const DiscoverPage = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setErrorMessage("No TV shows found")
-    }, 5000)
-  }, [])
+      setErrorMessage("No TV shows found");
+    }, 5000);
+  }, []);
 
   return (
     <div className="background">

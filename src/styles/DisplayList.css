@@ -4,8 +4,16 @@
     justify-content: center;
     align-items: center;
     font-size: 3rem;
+    text-align: center;
 }
 
 .display-list{
     flex: 0.8;
+}
+
+
+@media screen and (max-width: 768px) {
+    .display-list{
+        flex: 1;
+    }
 }
