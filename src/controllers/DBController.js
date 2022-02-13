@@ -1,5 +1,6 @@
 import { db } from "../firebase";
 import firebase from "firebase";
+import { getItemById } from "./APIController";
 
 const checkInFavourites = (id) => {
   return db
@@ -23,11 +24,23 @@ const checkInWatchLater = (id) => {
     .catch((err) => alert(err));
 };
 
-const addToFavourites = (props) => {
-  const { isFavourite, toWatchLater, casts, directors, video_key, number_of_episodes, number_of_seasons, ...favouriteItem } = props;
+const addToFavourites = async (props, isMovie) => {
+  let data = null;
+  const { id } = props;
+  const { genres } = await getItemById(id, isMovie);
+  const genre_list = genres.map(genre => genre.name);
+  if(isMovie){
+    const { release_date, id, poster_path, title, vote_average } = props;
+    data = { release_date, id, poster_path, title, vote_average, genre_list, isMovie };
+  }
+  else{
+    const { first_air_date, id, poster_path, name, vote_average } = props;
+    data = { first_air_date, id, poster_path, name, vote_average, genre_list, isMovie };
+  }
+
   db.collection("favourites")
     .add({
-      ...favouriteItem,
+      ...data,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     })
     .catch((err) => alert(err));
@@ -43,11 +56,23 @@ const removeFromFavourites = (props) => {
     .catch((err) => alert(err));
 };
 
-const addToWatchLater = (props) => {
-  const { isFavourite, toWatchLater, casts, directors, video_key, number_of_episodes, number_of_seasons, ...watchLaterItem } = props;
+const addToWatchLater = async (props, isMovie) => {
+  let data = null;
+  const { id } = props;
+  const { genres } = await getItemById(id, isMovie);
+  const genre_list = genres.map(genre => genre.name);
+  if(isMovie){
+    const { release_date, poster_path, title, vote_average } = props;
+    data = { release_date, id, poster_path, title, vote_average, genre_list, isMovie };
+  }
+  else{
+    const { first_air_date, poster_path, name, vote_average } = props;
+    data = { first_air_date, id, poster_path, name, vote_average, genre_list, isMovie };
+  }
+
   db.collection("watch-later")
     .add({
-      ...watchLaterItem,
+      ...data,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     })
     .catch((err) => alert(err));

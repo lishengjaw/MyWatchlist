@@ -5,6 +5,7 @@
     padding: 10px 20px;
     display: flex;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .display-row-left{
@@ -18,6 +19,9 @@
 
 .display-row-center{
     flex: 0.8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }  
 
 .display-row-center h4{

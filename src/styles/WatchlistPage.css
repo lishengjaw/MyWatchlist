@@ -1,0 +1,162 @@
+.item-wrapper{
+    position: relative;
+    background-color: rgb(13, 37, 63, 0.6);
+    padding: 20px 50px;
+}
+
+.item-background{
+    opacity: 0.2;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    object-fit: cover;
+}
+
+.item-page{
+    color: whitesmoke;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none;
+    display: flex;
+    align-items: flex-start;
+    min-height: 80vh;
+    position: relative;
+}   
+
+.item-header{
+    border: none;
+    padding: 0;
+}
+
+.item-poster{
+    height: 80vh;
+    border-radius: 40px;
+}
+
+.item-info{
+    padding: 0 30px;
+}
+
+.item-header > button{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 999;
+    background-color: whitesmoke !important;
+}
+
+.item-subheader{
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+
+.item-subheader h6{
+    padding: 5px;
+    border-radius: 5px;
+    margin: 0 10px 0 0;
+}
+
+.item-subheader h6:first-child{
+    color: black;
+}
+
+.item-subheader h6:not(:first-child){
+    background-color: rgb(13, 37, 63);
+}
+
+.item-icons{
+    display: flex;
+    width: 8rem;
+    height: 3rem;
+    align-items: center;
+}
+
+.item-icon{
+    background-color: rgb(13, 37, 63);
+    border-radius: 50%;
+    height: 2rem;
+    width: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.item-icons a{
+    width: 15px;
+    height: 30px;
+}
+
+.item-info a{
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.item-status{
+    display: flex;
+}
+
+.item-status h6{
+    background-color:rgb(13, 37, 63);
+    margin: -10px 10px 10px 0;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.item-network{
+    max-width: 70px;
+    max-height: 30px;
+    object-fit: contain;
+    margin: 10px 10px 10px 0;
+}
+
+.item-tagline{
+    opacity: 0.8;
+    font-style: italic;
+}
+
+.item-people{
+    display: flex;
+}
+
+.item-directors{
+    flex: 0.3;
+}
+
+.item-casts{
+    height: 200px;
+    overflow-y: auto;
+    flex: 0.7;
+}
+
+.item-casts button{
+    border: none;
+    background-color: transparent;
+    font-weight: bold;
+    color: #01b4e4;
+}
+
+.item-recommend{
+    margin-top: 10vh;
+}
+
+.item-recommend h1{
+    color: whitesmoke;
+}
+
+.item-recommend-list{
+    display: flex;
+    overflow: auto;
+}
+
+.item-recommend-card{
+    margin-right: 10px;
+}
+

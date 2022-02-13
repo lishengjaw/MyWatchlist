@@ -42,29 +42,18 @@ const searchDiscoverTVShows = async (searchText, activePage) => {
   }
 };
 
-const getGenres = async (genre_ids, isMovie) => {
+const getItemById = async (id, isMovie) => {
   try {
     const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/genre/${
+      `${process.env.REACT_APP_API_URL}/${
         isMovie ? "movie" : "tv"
-      }/list?api_key=${process.env.REACT_APP_API_KEY}`
+      }/${id}?api_key=${process.env.REACT_APP_API_KEY}`
     );
-    const genres_list = await res.json();
-    return matchGenreIDWithName(genres_list, genre_ids);
+    const data = await res.json();
+    return data;
   } catch (err) {
     alert(err);
   }
-};
-
-const matchGenreIDWithName = (genres, genre_ids) => {
-  for (let i = 0; i < genre_ids.length; i++) {
-    for (let j = 0; j < genres.genres.length; j++) {
-      if (genre_ids[i] === genres.genres[j].id) {
-        genre_ids[i] = genres.genres[j].name;
-      }
-    }
-  }
-  return genre_ids;
 };
 
 const getCastsAndDirectors = async (id, isMovie) => {
@@ -80,14 +69,14 @@ const getCastsAndDirectors = async (id, isMovie) => {
     const data = await res.json();
     for (let i = 0; i < data.cast.length; i++) {
       if (data.cast[i] && data.cast[i].name) {
-        const { name } = data.cast[i];
-        casts.push(name);
+        const { id, name } = data.cast[i];
+        casts.push({ id, name });
       }
     }
     for (let i = 0; i < data.crew.length; i++) {
       const { id, name, job } = data.crew[i];
       if (isMovie && job === "Director" && !set.has(id)) {
-        directors.push(name);
+        directors.push({ id, name });
         set.add(id);
       }
     }
@@ -117,13 +106,15 @@ const getVideo = async (id, isMovie) => {
   }
 };
 
-const getOtherTVShowsDetails = async (id) => {
+const getRecommendedMoviesAndTVShows = async (id, isMovie) => {
   try {
     const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/tv/${id}?api_key=${process.env.REACT_APP_API_KEY}`
+      `${process.env.REACT_APP_API_URL}/${
+        isMovie ? "movie" : "tv"
+      }/${id}/recommendations?api_key=${process.env.REACT_APP_API_KEY}&page=1`
     );
-    const otherTVShowsDetails = await res.json();
-    return otherTVShowsDetails;
+    const data = await res.json();
+    return data.results;
   } catch (err) {
     alert(err);
   }
@@ -134,8 +125,8 @@ export {
   searchDiscoverMovies,
   getDiscoverTVShows,
   searchDiscoverTVShows,
-  getGenres,
   getCastsAndDirectors,
   getVideo,
-  getOtherTVShowsDetails,
+  getRecommendedMoviesAndTVShows,
+  getItemById,
 };

@@ -5,7 +5,7 @@ const HomePage = () => {
   return (
     <div className="background home-page">
       <div className="logo">
-        <a href="/discover-movies">
+        <a href="/movies">
           <FaFilm />
         </a>
       </div>

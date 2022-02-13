@@ -1,6 +1,3 @@
-import { useDispatch } from "react-redux";
-import { openModal } from "../features/modalSlice";
-import { setClickedItem } from "../features/clickedItemSlice";
 import { Card } from "react-bootstrap";
 import "../styles/WatchlistCard.css";
 import { FaHeart, FaBookmark } from "react-icons/fa";
@@ -11,22 +8,15 @@ import {
   removeFromFavourites,
   removeFromWatchLater,
 } from "../controllers/DBController";
+import { useNavigate } from "react-router";
 
 const WatchlistCard = (props) => {
-  const {
-    id,
-    poster_path,
-    vote_average,
-    isFavourite,
-    toWatchLater,
-    title,
-    date,
-  } = props;
+  const { id, poster_path, vote_average, isFavourite, toWatchLater, title } =
+    props;
 
   const [favouriteState, setFavouriteState] = useState(false);
   const [watchLaterState, setWatchLaterState] = useState(false);
-  const year = date?.split("-")[0];
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let unmounted = false;
@@ -63,18 +53,18 @@ const WatchlistCard = (props) => {
     return toWatchLater ? "red" : "lightgrey";
   };
 
-  const changeFavouriteState = () => {
+  const changeFavouriteState = (isMovie) => {
     if (!favouriteState) {
-      addToFavourites(props);
+      addToFavourites(props, isMovie);
     } else {
       removeFromFavourites(props);
     }
     setFavouriteState(!favouriteState);
   };
 
-  const changeWatchLaterState = () => {
+  const changeWatchLaterState = (isMovie) => {
     if (!watchLaterState) {
-      addToWatchLater(props);
+      addToWatchLater(props, isMovie);
     } else {
       removeFromWatchLater(props);
     }
@@ -86,42 +76,35 @@ const WatchlistCard = (props) => {
       <div className="card-icon">
         <FaHeart
           style={{ color: selectFavouriteColor(favouriteState) }}
-          onClick={changeFavouriteState}
+          onClick={() => changeFavouriteState(window.location.pathname.split("/")[1] === "movies")}
         />
         <FaBookmark
           style={{ color: selectWatchLaterColor(watchLaterState) }}
-          onClick={changeWatchLaterState}
+          onClick={() => changeWatchLaterState(window.location.pathname.split("/")[1] === "movies")}
         />
       </div>
       <div
         onClick={() => {
-          const { isFavourite, toWatchLater, ...favouriteItem } = props;
-          dispatch(openModal());
-          dispatch(
-            setClickedItem({
-              isFavourite: favouriteState,
-              toWatchLater: watchLaterState,
-              ...favouriteItem,
-            })
-          );
+          const pathname = window.location.pathname.split("/")[1];
+          pathname === "movies"
+            ? navigate(`/movies/${id}`)
+            : navigate(`/tv-shows/${id}`);
         }}
       >
         <Card.Img
           variant="top"
           src={
             poster_path
-              ? `${process.env.REACT_APP_POSTER_PATH}/${poster_path}`
+              ? `${process.env.REACT_APP_POSTER_PATH}${poster_path}`
               : `/images/no-poster-placeholder.png`
           }
         />
         <Card.Body>
-          <Card.Title>
-            {`${title}`} {year && `(${year})`}
-          </Card.Title>
+          <Card.Title>{title}</Card.Title>
           <Card.Title
             style={{ backgroundColor: selectRatingColor(vote_average) }}
           >
-            {vote_average}
+            {Math.round(vote_average * 10) / 10}
           </Card.Title>
         </Card.Body>
       </div>

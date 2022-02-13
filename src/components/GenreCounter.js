@@ -8,9 +8,9 @@ const GenreCounter = (props) => {
     const getGenreCount = () => {
       const genre_map = new Map();
       for (let i = 0; i < temp.length; i++) {
-        const { genre_names } = temp[i].data;
-        for (let j = 0; j < genre_names.length; j++) {
-          const genre = genre_names[j];
+        const { genre_list } = temp[i].data;
+        for (let j = 0; j < genre_list.length; j++) {
+          const genre = genre_list[j];
           if (genre_map.has(genre)) {
             genre_map.set(genre, genre_map.get(genre) + 1);
           } else {
