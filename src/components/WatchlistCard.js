@@ -11,8 +11,15 @@ import {
 import { useNavigate } from "react-router";
 
 const WatchlistCard = (props) => {
-  const { id, poster_path, vote_average, isFavourite, toWatchLater, title } =
-    props;
+  const {
+    id,
+    poster_path,
+    vote_average,
+    isFavourite,
+    toWatchLater,
+    title,
+    name,
+  } = props;
 
   const [favouriteState, setFavouriteState] = useState(false);
   const [watchLaterState, setWatchLaterState] = useState(false);
@@ -76,11 +83,19 @@ const WatchlistCard = (props) => {
       <div className="card-icon">
         <FaHeart
           style={{ color: selectFavouriteColor(favouriteState) }}
-          onClick={() => changeFavouriteState(window.location.pathname.split("/")[1] === "movies")}
+          onClick={() =>
+            changeFavouriteState(
+              window.location.pathname.split("/")[1] === "movies"
+            )
+          }
         />
         <FaBookmark
           style={{ color: selectWatchLaterColor(watchLaterState) }}
-          onClick={() => changeWatchLaterState(window.location.pathname.split("/")[1] === "movies")}
+          onClick={() =>
+            changeWatchLaterState(
+              window.location.pathname.split("/")[1] === "movies"
+            )
+          }
         />
       </div>
       <div
@@ -100,7 +115,7 @@ const WatchlistCard = (props) => {
           }
         />
         <Card.Body>
-          <Card.Title>{title}</Card.Title>
+          <Card.Title>{title || name}</Card.Title>
           <Card.Title
             style={{ backgroundColor: selectRatingColor(vote_average) }}
           >

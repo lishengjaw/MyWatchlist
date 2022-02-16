@@ -34,6 +34,7 @@ const WatchlistPage = () => {
     let isMounted = true;
     setErrorMessage(`Loading ${isMovie ? "movie..." : "TV show..."}`);
     setPageItem(null);
+    setSeeMore(false);
     const fetchMovies = async () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
       try {
@@ -76,9 +77,10 @@ const WatchlistPage = () => {
   }, [id, isMovie, location.key]);
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       setErrorMessage(`No ${isMovie ? "movie" : "TV show"} found`);
     }, 5000);
+    clearTimeout(timeout);
   }, [isMovie, id]);
 
   const selectRatingColor = (vote_average) => {
@@ -131,11 +133,13 @@ const WatchlistPage = () => {
             alt=""
           />
           <div className="item-page">
-            <img
-              className="item-poster"
-              src={`${process.env.REACT_APP_POSTER_PATH}${pageItem.poster_path}`}
-              alt=""
-            />
+            <div className="item-poster">
+              <img
+                src={`${process.env.REACT_APP_POSTER_PATH}${pageItem.poster_path}`}
+                alt=""
+              />
+            </div>
+
             <div className="item-info">
               <h1>
                 {isMovie &&
@@ -288,8 +292,8 @@ const WatchlistPage = () => {
               </div>
             </div>
           </div>
-          <div className="item-recommend">
-            <h1>{`Recommended ${isMovie ? "movies" : "TV shows"}`}</h1>
+          {pageItem.recommended_list && pageItem.recommended_list.length > 0 && <div className="item-recommend">
+            <h3>{`Recommended ${isMovie ? "movies" : "TV shows"}`}</h3>
             <div className="item-recommend-list">
               {pageItem.recommended_list.map((item) => {
                 const { id } = item;
@@ -304,7 +308,7 @@ const WatchlistPage = () => {
                 );
               })}
             </div>
-          </div>
+          </div>}
         </>
       ) : (
         <h1 className="list-no-search-results">{errorMessage}</h1>

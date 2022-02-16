@@ -2,6 +2,7 @@
     position: relative;
     background-color: rgb(13, 37, 63, 0.6);
     padding: 20px 50px;
+    min-height: calc(100vh - 56px);
 }
 
 .item-background{
@@ -21,7 +22,7 @@
     border: none;
     display: flex;
     align-items: flex-start;
-    min-height: 80vh;
+    width: 100%;
     position: relative;
 }   
 
@@ -31,12 +32,17 @@
 }
 
 .item-poster{
-    height: 80vh;
+    flex: 0.3;
+}
+
+.item-poster img{
+    width: 90%;
     border-radius: 40px;
 }
 
 .item-info{
     padding: 0 30px;
+    flex: 0.7;
 }
 
 .item-header > button{
@@ -49,7 +55,7 @@
 
 .item-subheader{
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     font-size: 0.8rem;
     margin: 10px 0;
     flex-wrap: wrap;
@@ -58,7 +64,7 @@
 .item-subheader h6{
     padding: 5px;
     border-radius: 5px;
-    margin: 0 10px 0 0;
+    margin: 10px 10px 0 0;
 }
 
 .item-subheader h6:first-child{
@@ -124,6 +130,7 @@
 
 .item-people{
     display: flex;
+    flex-wrap: wrap;
 }
 
 .item-directors{
@@ -131,7 +138,7 @@
 }
 
 .item-casts{
-    height: 200px;
+    height: 175px;
     overflow-y: auto;
     flex: 0.7;
 }
@@ -144,19 +151,33 @@
 }
 
 .item-recommend{
-    margin-top: 10vh;
+    margin-top: 10px;
 }
 
-.item-recommend h1{
+.item-recommend h3{
     color: whitesmoke;
 }
 
 .item-recommend-list{
     display: flex;
-    overflow: auto;
+    overflow: auto hidden;
 }
 
 .item-recommend-card{
-    margin-right: 10px;
+    margin: -30px 0 -40px -20px;
+    transform: scale(0.8)
 }
 
+@media screen and (max-width: 992px) {
+    .item-poster{
+        display: none;
+    }
+
+    .item-recommend{
+        display: none;
+    }
+
+    .item-wrapper{
+        height: 200vh;
+    }
+}
