@@ -20,7 +20,6 @@ const DiscoverMovies = (props) => {
     <>
       <div className="info">
         <FaInfoCircle />
-        <p>Click on the individual movie and TV show to see more details</p>
       </div>
       <div className="discover">
         <h1>TV Shows</h1>
