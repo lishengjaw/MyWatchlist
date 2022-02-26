@@ -19,7 +19,7 @@ const checkInWatchLater = (id) => {
     .where("id", "==", id)
     .get()
     .then((querySnapshot) => {
-      return !querySnapshot.empty ? true : false;
+      return !querySnapshot.empty;
     })
     .catch((err) => alert(err));
 };

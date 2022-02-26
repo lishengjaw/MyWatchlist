@@ -41,8 +41,9 @@ const WatchlistPage = () => {
         const data = await getItemById(id, isMovie);
         const { casts, directors } = await getCastsAndDirectors(id, isMovie);
         const video_key = await getVideo(id, isMovie);
-        const isFavourite = await checkInFavourites(id);
-        const toWatchLater = await checkInWatchLater(id);
+        const isFavourite = checkInFavourites(id);
+        const toWatchLater = checkInWatchLater(id);
+        console.log(id, isFavourite, toWatchLater);
         const start_year =
           data.release_date?.split("-")[0] ||
           data.first_air_date?.split("-")[0];
@@ -116,7 +117,7 @@ const WatchlistPage = () => {
 
   const changeWatchLaterState = () => {
     if (!pageItem.toWatchLater) {
-      addToWatchLater(pageItem);
+      addToWatchLater(pageItem, isMovie);
     } else {
       removeFromWatchLater(pageItem);
     }
