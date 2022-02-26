@@ -191,31 +191,28 @@ const WatchlistPage = () => {
                       </a>
                     </div>
                   )}
-
                 </div>
               </div>
-              <div className="item-genres">
-                  <h6>Genres:</h6>
-                  {pageItem.genres?.map((genre, index) => {
+              <div className="item-tags">
+                {pageItem.genres?.map((genre, index) => {
                   const { id, name } = genre;
                   return <h6 key={id}>{name}</h6>;
                 })}
+                {pageItem.number_of_seasons && pageItem.number_of_episodes && (
+                  <>
+                    <h6>
+                      {pageItem.number_of_seasons > 1
+                        ? `${pageItem.number_of_seasons} seasons`
+                        : `${pageItem.number_of_seasons} season`}
+                    </h6>
+                    <h6>
+                      {pageItem.number_of_episodes > 1
+                        ? `${pageItem.number_of_episodes} episodes`
+                        : `${pageItem.number_of_episodes} episode`}
+                    </h6>
+                  </>
+                )}
               </div>
-              {pageItem.number_of_seasons && pageItem.number_of_episodes && (
-                <div className="item-status">
-                  <h6>Seasons/Episodes:</h6>
-                  <h6>
-                    {pageItem.number_of_seasons > 1
-                      ? `${pageItem.number_of_seasons} seasons`
-                      : `${pageItem.number_of_seasons} season`}
-                  </h6>
-                  <h6>
-                    {pageItem.number_of_episodes > 1
-                      ? `${pageItem.number_of_episodes} episodes`
-                      : `${pageItem.number_of_episodes} episode`}
-                  </h6>
-                </div>
-              )}
               {pageItem.networks &&
                 pageItem.networks.map((network) => {
                   const { id, logo_path } = network;
@@ -297,23 +294,25 @@ const WatchlistPage = () => {
               </div>
             </div>
           </div>
-          {pageItem.recommended_list && pageItem.recommended_list.length > 0 && <div className="item-recommend">
-            <h3>{`Recommended ${isMovie ? "movies" : "TV shows"}`}</h3>
-            <div className="item-recommend-list">
-              {pageItem.recommended_list.map((item) => {
-                const { id } = item;
-                return (
-                  <div className="item-recommend-card" key={id}>
-                    <WatchlistCard
-                      {...item}
-                      isFavourite={checkInFavourites(id)}
-                      toWatchLater={checkInWatchLater(id)}
-                    />
-                  </div>
-                );
-              })}
+          {pageItem.recommended_list && pageItem.recommended_list.length > 0 && (
+            <div className="item-recommend">
+              <h3>{`Recommended ${isMovie ? "movies" : "TV shows"}`}</h3>
+              <div className="item-recommend-list">
+                {pageItem.recommended_list.map((item) => {
+                  const { id } = item;
+                  return (
+                    <div className="item-recommend-card" key={id}>
+                      <WatchlistCard
+                        {...item}
+                        isFavourite={checkInFavourites(id)}
+                        toWatchLater={checkInWatchLater(id)}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>}
+          )}
         </>
       ) : (
         <h1 className="list-no-search-results">{errorMessage}</h1>

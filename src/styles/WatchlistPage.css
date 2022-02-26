@@ -92,34 +92,19 @@
     text-decoration: none;
 }
 
-.item-genres{
+.item-tags{
     display: flex;
+    white-space: nowrap;
     flex-wrap: wrap;
+    margin-bottom: 10px;
 }
 
-.item-genres h6:not(:first-child){
+.item-tags h6{
     margin: 0 15px 15px 0;
-    font-weight: bold;
-    color: #0d253f;
-}
-
-.item-genres h6:first-child{
-    margin-right: 15px;
-}
-
-.item-status{
-    display: flex;
-    flex-wrap: wrap
-}
-
-.item-status h6:not(:first-child){
-    margin: 0 15px 20px 0;
-    font-weight: bold;
-    color: #0d253f;
-}
-
-.item-status h6:first-child{
-    margin-right: 15px;
+    color: rgb(239, 239, 241);
+    background-color: #0d253f;
+    padding: 3px 10px;
+    border-radius: 15px;
 }
 
 .item-network{
