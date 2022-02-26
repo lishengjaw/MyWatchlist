@@ -24,7 +24,7 @@ const FavouritesPage = () => {
   useEffect(() => {
     setTimeout(() => {
       setErrorMessage('No favourites found');
-    }, 5000)
+    }, 10000)
   }, [])
 
   return (

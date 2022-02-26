@@ -86,7 +86,7 @@ const DisplayRows = (props) => {
 
       <div className="display-row-right">
         <h6 style={{ backgroundColor: selectRatingColor(vote_average) }}>
-          {Math.round(vote_average * 10) / 10}
+          {vote_average.toFixed(1)}
         </h6>
         {isFavourite ? (
           <FaHeart style={{ color: selectColor() }} onClick={changeState} />

@@ -61,7 +61,7 @@ const WatchlistPage = () => {
           isFavourite,
           toWatchLater,
           recommended_list,
-          vote_average: Math.round((data.vote_average * 10) / 10),
+          vote_average: data.vote_average.toFixed(1),
         };
         if (isMounted) {
           setPageItem(newData);
@@ -163,10 +163,6 @@ const WatchlistPage = () => {
                 >
                   {pageItem.vote_average}
                 </h6>
-                {pageItem.genres?.map((genre, index) => {
-                  const { id, name } = genre;
-                  return <h6 key={id}>{name}</h6>;
-                })}
                 <div className="item-icons">
                   <div className="item-icon">
                     <FaHeart
@@ -195,10 +191,19 @@ const WatchlistPage = () => {
                       </a>
                     </div>
                   )}
+
                 </div>
+              </div>
+              <div className="item-genres">
+                  <h6>Genres:</h6>
+                  {pageItem.genres?.map((genre, index) => {
+                  const { id, name } = genre;
+                  return <h6 key={id}>{name}</h6>;
+                })}
               </div>
               {pageItem.number_of_seasons && pageItem.number_of_episodes && (
                 <div className="item-status">
+                  <h6>Seasons/Episodes:</h6>
                   <h6>
                     {pageItem.number_of_seasons > 1
                       ? `${pageItem.number_of_seasons} seasons`

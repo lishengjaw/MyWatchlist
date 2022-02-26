@@ -55,72 +55,78 @@
 
 .item-subheader{
     display: flex;
-    align-items: flex-start;
-    font-size: 0.8rem;
-    margin: 10px 0;
-    flex-wrap: wrap;
 }
 
 .item-subheader h6{
-    padding: 5px;
-    border-radius: 5px;
-    margin: 10px 10px 0 0;
-}
-
-.item-subheader h6:first-child{
+    font-size: 0.9rem;
     color: black;
-}
-
-.item-subheader h6:not(:first-child){
-    background-color: rgb(13, 37, 63);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 0.15rem solid #0d253f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 15px 15px 0;
 }
 
 .item-icons{
     display: flex;
-    width: 8rem;
-    height: 3rem;
-    align-items: center;
 }
 
 .item-icon{
-    background-color: rgb(13, 37, 63);
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    height: 2rem;
-    width: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1rem;
+    margin: 10px 15px 15px 0;
+    background-color: #0d253f;
     cursor: pointer;
-    margin-right: 10px;
 }
 
-.item-icons a{
-    width: 15px;
-    height: 30px;
-}
-
-.item-info a{
+.item-icon a{
+    margin: 0 -2px 5px 0;
     color: whitesmoke;
     text-decoration: none;
 }
 
-.item-status{
+.item-genres{
     display: flex;
+    flex-wrap: wrap;
 }
 
-.item-status h6{
-    background-color:rgb(13, 37, 63);
-    margin: -10px 10px 10px 0;
-    padding: 5px;
-    border-radius: 5px;
+.item-genres h6:not(:first-child){
+    margin: 0 15px 15px 0;
+    font-weight: bold;
+    color: #0d253f;
+}
+
+.item-genres h6:first-child{
+    margin-right: 15px;
+}
+
+.item-status{
+    display: flex;
+    flex-wrap: wrap
+}
+
+.item-status h6:not(:first-child){
+    margin: 0 15px 20px 0;
+    font-weight: bold;
+    color: #0d253f;
+}
+
+.item-status h6:first-child{
+    margin-right: 15px;
 }
 
 .item-network{
     max-width: 70px;
     max-height: 30px;
     object-fit: contain;
-    margin: 10px 10px 10px 0;
+    margin-bottom: 15px;
 }
 
 .item-tagline{
@@ -147,7 +153,8 @@
     border: none;
     background-color: transparent;
     font-weight: bold;
-    color: #01b4e4;
+    color: #0d253f;
+    padding: 0;
 }
 
 .item-recommend{
@@ -164,8 +171,8 @@
 }
 
 .item-recommend-card{
-    margin: -30px 0 -40px -20px;
-    transform: scale(0.8)
+    margin: -20px 0 -20px -10px;
+    transform: scale(0.85);
 }
 
 @media screen and (max-width: 992px) {

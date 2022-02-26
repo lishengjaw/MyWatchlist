@@ -21,17 +21,6 @@
     text-align: center; 
 }
 
-.info{
-    display: flex;
-}
-
-.info svg{
-    position: relative;
-    top: 5px;
-    left: -5px;
-    color: #0d253f;
-}
-
 .discover-no-search-results{
     display: flex;
     height: calc(100vh - 164px);

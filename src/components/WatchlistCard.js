@@ -17,8 +17,6 @@ const WatchlistCard = (props) => {
     vote_average,
     isFavourite,
     toWatchLater,
-    title,
-    name,
   } = props;
 
   const [favouriteState, setFavouriteState] = useState(false);
@@ -114,14 +112,12 @@ const WatchlistCard = (props) => {
               : `/images/no-poster-placeholder.png`
           }
         />
-        <Card.Body>
-          <Card.Title>{title || name}</Card.Title>
-          <Card.Title
-            style={{ backgroundColor: selectRatingColor(vote_average) }}
-          >
-            {Math.round(vote_average * 10) / 10}
-          </Card.Title>
-        </Card.Body>
+        <div
+          className="card-rating"
+          style={{ backgroundColor: selectRatingColor(vote_average) }}
+        >
+          {vote_average.toFixed(1)}
+        </div>
       </div>
     </Card>
   );
