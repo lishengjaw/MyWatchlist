@@ -21,7 +21,7 @@ import { useLocation } from "react-router-dom";
 const WatchlistPage = () => {
   const pathname = window.location.pathname.split("/");
   const isMovie = pathname[1] === "movies";
-  const id = pathname[2];
+  const id = parseInt(pathname[2]);
 
   const [pageItem, setPageItem] = useState(null);
   const [seeMore, setSeeMore] = useState(false);
@@ -41,9 +41,8 @@ const WatchlistPage = () => {
         const data = await getItemById(id, isMovie);
         const { casts, directors } = await getCastsAndDirectors(id, isMovie);
         const video_key = await getVideo(id, isMovie);
-        const isFavourite = checkInFavourites(id);
-        const toWatchLater = checkInWatchLater(id);
-        console.log(id, isFavourite, toWatchLater);
+        const isFavourite = await checkInFavourites(id);
+        const toWatchLater = await checkInWatchLater(id);
         const start_year =
           data.release_date?.split("-")[0] ||
           data.first_air_date?.split("-")[0];
