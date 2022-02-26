@@ -6,21 +6,17 @@ import {
   checkInFavourites,
   checkInWatchLater,
 } from "../controllers/DBController";
-import { FaInfoCircle } from "react-icons/fa";
 
 const DiscoverMoviesList = (props) => {
   const { temp } = props;
   const [discoverMoviesList, setDiscoverMoviesList] = useState(temp);
 
-    useEffect(() => {
-      setDiscoverMoviesList(temp);
-    }, [temp])
+  useEffect(() => {
+    setDiscoverMoviesList(temp);
+  }, [temp]);
 
   return (
     <>
-      <div className="info">
-        <FaInfoCircle />
-      </div>
       <div className="discover">
         <h1>Movies</h1>
         <div className="discover-movies-list">

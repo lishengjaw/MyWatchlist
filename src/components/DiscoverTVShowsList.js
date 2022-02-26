@@ -6,7 +6,6 @@ import {
   checkInFavourites,
   checkInWatchLater,
 } from "../controllers/DBController";
-import { FaInfoCircle } from "react-icons/fa";
 
 const DiscoverMovies = (props) => {
   const { temp } = props;
@@ -18,9 +17,6 @@ const DiscoverMovies = (props) => {
 
   return (
     <>
-      <div className="info">
-        <FaInfoCircle />
-      </div>
       <div className="discover">
         <h1>TV Shows</h1>
         <div className="discover-tv-shows-list">
