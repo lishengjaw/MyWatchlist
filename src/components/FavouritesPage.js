@@ -6,8 +6,8 @@ import "../styles/FavouritesPage.css";
 
 const FavouritesPage = () => {
   const [favouritesList, setFavouritesList] = useState([]);
-  const [errorMessage, setErrorMessage] = useState('Loading favourites...');
-  
+  const [errorMessage, setErrorMessage] = useState("Loading favourites...");
+
   useEffect(() => {
     db.collection("favourites")
       .orderBy("timestamp", "desc")
@@ -22,10 +22,11 @@ const FavouritesPage = () => {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      setErrorMessage('No favourites found');
-    }, 10000)
-  }, [])
+    const timeout = setTimeout(() => {
+      clearTimeout(timeout);
+      setErrorMessage("No favourites found");
+    }, 10000);
+  }, []);
 
   return (
     <div className="background">

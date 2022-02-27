@@ -22,7 +22,8 @@ const WatchLaterPage = () => {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
+      clearTimeout(timeout);
       setErrorMessage('No watch laters found')
     }, 10000)
   }, [])

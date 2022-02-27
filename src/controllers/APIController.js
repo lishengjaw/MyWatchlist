@@ -1,42 +1,30 @@
-const getDiscoverMovies = async (activePage) => {
+const getDiscoverItems = async (isMovie, activePage) => {
   try {
     const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/discover/movie/?api_key=${process.env.REACT_APP_API_KEY}&sort_by=popularity.desc&page=${activePage}`
+      `${process.env.REACT_APP_API_URL}/discover/${
+        isMovie ? "movie" : "tv"
+      }/?api_key=${
+        process.env.REACT_APP_API_KEY
+      }&sort_by=popularity.desc&page=${activePage}`
     );
-    return res;
+    const data = res.json();
+    return data;
   } catch (err) {
     alert(err);
   }
 };
 
-const searchDiscoverMovies = async (searchText, activePage) => {
+const searchDiscoverItems = async (isMovie, searchText, activePage) => {
   try {
     const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/search/movie/?api_key=${process.env.REACT_APP_API_KEY}&query=${searchText}&page=${activePage}`
+      `${process.env.REACT_APP_API_URL}/search/${
+        isMovie ? "movie" : "tv"
+      }/?api_key=${
+        process.env.REACT_APP_API_KEY
+      }&query=${searchText}&page=${activePage}`
     );
-    return res;
-  } catch (err) {
-    alert(err);
-  }
-};
-
-const getDiscoverTVShows = async (activePage) => {
-  try {
-    const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/discover/tv/?api_key=${process.env.REACT_APP_API_KEY}&sort_by=popularity.desc&page=${activePage}`
-    );
-    return res;
-  } catch (err) {
-    alert(err);
-  }
-};
-
-const searchDiscoverTVShows = async (searchText, activePage) => {
-  try {
-    const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/search/tv/?api_key=${process.env.REACT_APP_API_KEY}&query=${searchText}&page=${activePage}`
-    );
-    return res;
+    const data = res.json();
+    return data;
   } catch (err) {
     alert(err);
   }
@@ -120,13 +108,43 @@ const getRecommendedMoviesAndTVShows = async (id, isMovie) => {
   }
 };
 
+const getGenres = async (isMovie) => {
+  try {
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URL}/genre/${
+        isMovie ? "movie" : "tv"
+      }/list?api_key=${process.env.REACT_APP_API_KEY}`
+    );
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    alert(err);
+  }
+};
+
+const getItemsByGenre = async (isMovie, genre, activePage) => {
+  try {
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URL}/discover/${
+        isMovie ? "movie" : "tv"
+      }?with_genres=${genre}&api_key=${
+        process.env.REACT_APP_API_KEY
+      }&sort_by=popularity.desc&page=${activePage}`
+    );
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    alert(err);
+  }
+};
+
 export {
-  getDiscoverMovies,
-  searchDiscoverMovies,
-  getDiscoverTVShows,
-  searchDiscoverTVShows,
+  getDiscoverItems,
+  searchDiscoverItems,
   getCastsAndDirectors,
   getVideo,
   getRecommendedMoviesAndTVShows,
   getItemById,
+  getGenres,
+  getItemsByGenre,
 };

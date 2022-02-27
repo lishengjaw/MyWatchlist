@@ -80,14 +80,16 @@ const DisplayRows = (props) => {
         <h4>{title || name}</h4>
         <div>
           {genre_list?.map((genre, index) => (
-            <Badge pill key={index}>{genre}</Badge>
+            <Badge pill key={index}>
+              {genre}
+            </Badge>
           ))}
         </div>
       </div>
 
       <div className="display-row-right">
         <h6 style={{ backgroundColor: selectRatingColor(vote_average) }}>
-          {vote_average.toFixed(1)}
+          {parseFloat(vote_average).toFixed(1)}
         </h6>
         {isFavourite ? (
           <FaHeart style={{ color: selectColor() }} onClick={changeState} />

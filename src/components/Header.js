@@ -14,6 +14,8 @@ const Header = () => {
           <Nav className="me-auto">
             <Nav.Link href="/movies">Discover Movies</Nav.Link>
             <Nav.Link href="/tv-shows">Discover TV Shows</Nav.Link>
+            <Nav.Link href="/movies/genres">Movie Genres</Nav.Link>
+            <Nav.Link href="/tv-shows/genres">TV Show Genres</Nav.Link>
             <Nav.Link href="/favourites">Favourites</Nav.Link>
             <Nav.Link href="/watch-later">Watch Later</Nav.Link>
           </Nav>

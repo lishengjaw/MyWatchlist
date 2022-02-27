@@ -7,7 +7,7 @@ import {
   clearSearchText,
 } from "../features/searchTextSlice";
 
-const MoviesSearchBar = () => {
+const SearchBar = () => {
   const searchText = useSelector(selectSearchText);
   const dispatch = useDispatch();
 
@@ -30,4 +30,4 @@ const MoviesSearchBar = () => {
   );
 };
 
-export default MoviesSearchBar;
+export default SearchBar;

@@ -1,29 +1,27 @@
 import { useEffect, useState } from "react";
-import "../styles/Watchlist.css";
-import WatchlistCard from "./WatchlistCard";
-import WatchlistPagination from "./WatchlistPagination";
 import {
   checkInFavourites,
   checkInWatchLater,
 } from "../controllers/DBController";
+import ItemCard from "./ItemCard";
+import Pagination from "./Pagination";
+import "../styles/DiscoverList.css";
 
-const DiscoverMoviesList = (props) => {
-  const { temp } = props;
-  const [discoverMoviesList, setDiscoverMoviesList] = useState(temp);
+const DiscoverList = ({ temp, isMovie, isHidden }) => {
+  const [discoverList, setDiscoverList] = useState(temp);
 
   useEffect(() => {
-    setDiscoverMoviesList(temp);
+    setDiscoverList(temp);
   }, [temp]);
-
   return (
     <>
       <div className="discover">
-        <h1>Movies</h1>
-        <div className="discover-movies-list">
-          {discoverMoviesList.map((item) => {
+        {!isHidden && <h1>{`${isMovie ? "Movies" : "Tv Shows"}`}</h1>}
+        <div className="discover-list">
+          {discoverList.map((item) => {
             const { id } = item;
             return (
-              <WatchlistCard
+              <ItemCard
                 key={id}
                 {...item}
                 isFavourite={checkInFavourites(id)}
@@ -33,9 +31,9 @@ const DiscoverMoviesList = (props) => {
           })}
         </div>
       </div>
-      <WatchlistPagination />
+      <Pagination />
     </>
   );
 };
 
-export default DiscoverMoviesList;
+export default DiscoverList;

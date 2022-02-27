@@ -29,10 +29,11 @@ const GenreCounter = (props) => {
   return (
     <div className="genre-counter">
       <h2>Genres</h2>
-      {genreList && genreList.map((genre, index) => {
-        const [key, value] = genre;
-        return <p key={index}>{`${key}: ${value}`}</p>
-      })}
+      {genreList &&
+        genreList.map((genre, index) => {
+          const [key, value] = genre;
+          return <p key={index}>{`${key}: ${value}`}</p>;
+        })}
     </div>
   );
 };

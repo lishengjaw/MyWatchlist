@@ -1,4 +1,4 @@
-import "../styles/WatchlistPage.css";
+import "../styles/ItemPage.css";
 import { useEffect, useState } from "react";
 import { FaHeart, FaBookmark, FaVideo } from "react-icons/fa";
 import {
@@ -15,11 +15,11 @@ import {
   getRecommendedMoviesAndTVShows,
   getVideo,
 } from "../controllers/APIController";
-import WatchlistCard from "./WatchlistCard";
+import ItemCard from "./ItemCard";
 import { useLocation } from "react-router-dom";
 import { Badge } from "react-bootstrap";
 
-const WatchlistPage = () => {
+const ItemPage = () => {
   const pathname = window.location.pathname.split("/");
   const isMovie = pathname[1] === "movies";
   const id = parseInt(pathname[2]);
@@ -36,42 +36,40 @@ const WatchlistPage = () => {
     setErrorMessage(`Loading ${isMovie ? "movie..." : "TV show..."}`);
     setPageItem(null);
     setSeeMore(false);
-    const fetchMovies = async () => {
+    const fetchItems = async () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
-      try {
-        const data = await getItemById(id, isMovie);
-        const { casts, directors } = await getCastsAndDirectors(id, isMovie);
-        const video_key = await getVideo(id, isMovie);
-        const isFavourite = await checkInFavourites(id);
-        const toWatchLater = await checkInWatchLater(id);
-        const start_year =
-          data.release_date?.split("-")[0] ||
-          data.first_air_date?.split("-")[0];
-        const end_year = data.last_air_date?.split("-")[0];
-        const recommended_list = await getRecommendedMoviesAndTVShows(
-          id,
-          isMovie
-        );
-        const newData = {
-          ...data,
-          casts,
-          directors,
-          video_key,
-          start_year,
-          end_year,
-          isFavourite,
-          toWatchLater,
-          recommended_list,
-          vote_average: data.vote_average.toFixed(1),
-        };
-        if (isMounted) {
-          setPageItem(newData);
-        }
-      } catch (err) {
-        alert(err);
+      const data = await getItemById(id, isMovie);
+      if (data && !data.id) {
+        return;
+      }
+      const { casts, directors } = await getCastsAndDirectors(id, isMovie);
+      const video_key = await getVideo(id, isMovie);
+      const isFavourite = await checkInFavourites(id);
+      const toWatchLater = await checkInWatchLater(id);
+      const start_year =
+        data.release_date?.split("-")[0] || data.first_air_date?.split("-")[0];
+      const end_year = data.last_air_date?.split("-")[0];
+      const recommended_list = await getRecommendedMoviesAndTVShows(
+        id,
+        isMovie
+      );
+      const newData = {
+        ...data,
+        casts,
+        directors,
+        video_key,
+        start_year,
+        end_year,
+        isFavourite,
+        toWatchLater,
+        recommended_list,
+        vote_average: parseFloat(data.vote_average).toFixed(1),
+      };
+      if (isMounted) {
+        setPageItem(newData);
       }
     };
-    fetchMovies();
+    fetchItems();
     return () => {
       isMounted = false;
     };
@@ -79,9 +77,9 @@ const WatchlistPage = () => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
+      clearTimeout(timeout);
       setErrorMessage(`No ${isMovie ? "movie" : "TV show"} found`);
     }, 5000);
-    clearTimeout(timeout);
   }, [isMovie, id]);
 
   const selectRatingColor = (vote_average) => {
@@ -126,7 +124,7 @@ const WatchlistPage = () => {
 
   return (
     <div className="item-wrapper">
-      {pageItem ? (
+      {pageItem && pageItem ? (
         <>
           <img
             className="item-background"
@@ -197,7 +195,11 @@ const WatchlistPage = () => {
               <div className="item-tags">
                 {pageItem.genres?.map((genre, index) => {
                   const { id, name } = genre;
-                  return <Badge pill key={id}>{name}</Badge>;
+                  return (
+                    <Badge pill key={id}>
+                      {name}
+                    </Badge>
+                  );
                 })}
                 {pageItem.number_of_seasons && pageItem.number_of_episodes && (
                   <>
@@ -303,7 +305,7 @@ const WatchlistPage = () => {
                   const { id } = item;
                   return (
                     <div className="item-recommend-card" key={id}>
-                      <WatchlistCard
+                      <ItemCard
                         {...item}
                         isFavourite={checkInFavourites(id)}
                         toWatchLater={checkInWatchLater(id)}
@@ -322,4 +324,4 @@ const WatchlistPage = () => {
   );
 };
 
-export default WatchlistPage;
+export default ItemPage;

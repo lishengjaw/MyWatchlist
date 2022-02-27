@@ -1,5 +1,5 @@
-.discover-movies-list,
-.discover-tv-shows-list
+.discover-list,
+.genres-list
 {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -28,25 +28,23 @@
     align-items: center;
     font-size: 3rem;
     text-align: center;
+    color: #0d253f;
 }
 
 @media screen and (max-width: 1200px) {
-    .discover-movies-list,
-    .discover-tv-shows-list {
+    .discover-list{
         grid-template-columns: repeat(4, 1fr);
     }
 }
 
 @media screen and (max-width: 992px) {
-    .discover-movies-list,
-    .discover-tv-shows-list {
+    .discover-list{
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media screen and (max-width: 768px) {
-    .discover-movies-list,
-    .discover-tv-shows-list {
+    .discover-list{
         grid-template-columns: repeat(2, 1fr);
     }
 }

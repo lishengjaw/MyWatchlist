@@ -1,5 +1,5 @@
 import { Card } from "react-bootstrap";
-import "../styles/WatchlistCard.css";
+import "../styles/ItemCard.css";
 import { FaHeart, FaBookmark } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import {
@@ -11,13 +11,7 @@ import {
 import { useNavigate } from "react-router";
 
 const WatchlistCard = (props) => {
-  const {
-    id,
-    poster_path,
-    vote_average,
-    isFavourite,
-    toWatchLater,
-  } = props;
+  const { id, poster_path, vote_average, isFavourite, toWatchLater } = props;
 
   const [favouriteState, setFavouriteState] = useState(false);
   const [watchLaterState, setWatchLaterState] = useState(false);
@@ -116,7 +110,7 @@ const WatchlistCard = (props) => {
           className="card-rating"
           style={{ backgroundColor: selectRatingColor(vote_average) }}
         >
-          {vote_average.toFixed(1)}
+          {parseFloat(vote_average).toFixed(1)}
         </div>
       </div>
     </Card>
