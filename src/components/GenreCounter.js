@@ -7,7 +7,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const GenreCounter = (props) => {
   const { temp } = props;
-  const [genreList, setGenreList] = useState([]);
+  const [genreList, setGenreList] = useState(null);
   const [genreData, setGenreData] = useState({
     labels: [],
     datasets: [
@@ -25,36 +25,37 @@ const GenreCounter = (props) => {
   }, [temp]);
 
   useEffect(() => {
-    if (genreList && genreList.length > 0) {
+    if (genreList) {
       generatePieChartData();
     }
   }, [genreList]);
 
   const getGenreCount = () => {
-    const genre_map = new Map();
+    const genre_map = {};
     for (let i = 0; i < temp.length; i++) {
       const { genre_list } = temp[i].data;
       for (let j = 0; j < genre_list.length; j++) {
         const genre = genre_list[j];
-        if (genre_map.has(genre)) {
-          genre_map.set(genre, genre_map.get(genre) + 1);
+        if (genre_map[genre]) {
+          genre_map[genre] += 1;
         } else {
-          genre_map.set(genre, 1);
+          genre_map[genre] = 1;
         }
       }
     }
-    const sorted_genre_map = [...genre_map].sort((a, b) => b[1] - a[1]);
-    setGenreList(sorted_genre_map);
+    setGenreList(genre_map);
   };
 
   const generatePieChartData = () => {
     setGenreData({
       ...genreData,
-      labels: genreList.map((genre) => genre[0]),
+      labels: Object.keys(genreList),
       datasets: [
         {
-          data: genreList.map((genre) => genre[1]),
-          backgroundColor: genreList.map((genre) => getRandomColor()),
+          data: Object.keys(genreList).map((key) => genreList[key]),
+          backgroundColor: Object.keys(genreList).map((genre) =>
+            getRandomColor()
+          ),
         },
       ],
     });
