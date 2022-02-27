@@ -12,7 +12,7 @@
 }
 
 .navbar-brand,
-.navbar-nav > a{
+.navbar-nav a{
     color: whitesmoke !important;
 }
 
@@ -24,7 +24,7 @@
     font-size: 1.5rem;
 }
 
-.navbar-nav > a:hover{
+.navbar-nav a:hover{
     transition: 0.5s ease-in-out;
     color: #01b4e4 !important;
 }

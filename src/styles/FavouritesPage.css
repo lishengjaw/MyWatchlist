@@ -2,7 +2,7 @@
     display: flex;
 }
 
-.favourites-page > h1 {
+.favourites-page h1 {
     margin: 10px 0 30px;
     text-align: center;
     background-color: #0d253f;

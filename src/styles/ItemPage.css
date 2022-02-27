@@ -45,7 +45,7 @@
     flex: 0.7;
 }
 
-.item-header > button{
+.item-header button{
     position: absolute;
     top: 15px;
     right: 15px;

@@ -9,9 +9,8 @@
 }
 
 .display-list{
-    flex: 0.8;
+    flex: 0.7;
 }
-
 
 @media screen and (max-width: 768px) {
     .display-list{
