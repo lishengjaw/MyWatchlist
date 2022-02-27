@@ -17,6 +17,7 @@ import {
 } from "../controllers/APIController";
 import WatchlistCard from "./WatchlistCard";
 import { useLocation } from "react-router-dom";
+import { Badge } from "react-bootstrap";
 
 const WatchlistPage = () => {
   const pathname = window.location.pathname.split("/");
@@ -196,20 +197,20 @@ const WatchlistPage = () => {
               <div className="item-tags">
                 {pageItem.genres?.map((genre, index) => {
                   const { id, name } = genre;
-                  return <h6 key={id}>{name}</h6>;
+                  return <Badge pill key={id}>{name}</Badge>;
                 })}
                 {pageItem.number_of_seasons && pageItem.number_of_episodes && (
                   <>
-                    <h6>
+                    <Badge pill>
                       {pageItem.number_of_seasons > 1
                         ? `${pageItem.number_of_seasons} seasons`
                         : `${pageItem.number_of_seasons} season`}
-                    </h6>
-                    <h6>
+                    </Badge>
+                    <Badge pill>
                       {pageItem.number_of_episodes > 1
                         ? `${pageItem.number_of_episodes} episodes`
                         : `${pageItem.number_of_episodes} episode`}
-                    </h6>
+                    </Badge>
                   </>
                 )}
               </div>

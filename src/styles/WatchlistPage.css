@@ -99,12 +99,12 @@
     margin-bottom: 10px;
 }
 
-.item-tags h6{
-    margin: 0 15px 15px 0;
-    color: rgb(239, 239, 241);
-    background-color: #0d253f;
-    padding: 3px 10px;
-    border-radius: 15px;
+.badge{
+    color: rgb(239, 239, 241) !important;
+    background-color: #0d253f !important;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin: 0 5px 5px 0;
 }
 
 .item-network{

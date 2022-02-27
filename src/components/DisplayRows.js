@@ -9,6 +9,7 @@ import {
   removeFromWatchLater,
 } from "../controllers/DBController";
 import { useNavigate } from "react-router-dom";
+import { Badge } from "react-bootstrap";
 
 const DisplayRows = (props) => {
   const { poster_path, title, vote_average, genre_list, name, isMovie, id } =
@@ -79,7 +80,7 @@ const DisplayRows = (props) => {
         <h4>{title || name}</h4>
         <div>
           {genre_list?.map((genre, index) => (
-            <span key={index}>{genre}</span>
+            <Badge pill key={index}>{genre}</Badge>
           ))}
         </div>
       </div>
