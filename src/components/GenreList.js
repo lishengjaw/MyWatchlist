@@ -32,7 +32,13 @@ const GenreFilters = ({ isMovie }) => {
   }, [isMovie]);
 
   useEffect(() => {
-    dispatch(setActivePage(1));
+    const fetchItemsByGenre = async (genre) => {
+      const data = await getItemsByGenre(isMovie, genre, 1);
+      setItemsByGenre(data.results);
+      dispatch(setActivePage(1));
+      dispatch(setTotalPages(data.total_pages));
+    };
+    fetchItemsByGenre(selectedGenre);
   }, [isMovie, selectedGenre]);
 
   useEffect(() => {
@@ -40,10 +46,9 @@ const GenreFilters = ({ isMovie }) => {
     const fetchItemsByGenre = async (genre) => {
       const data = await getItemsByGenre(isMovie, genre, activePage);
       setItemsByGenre(data.results);
-      dispatch(setTotalPages(data.total_pages));
     };
     fetchItemsByGenre(selectedGenre);
-  }, [isMovie, selectedGenre, activePage]);
+  }, [isMovie, activePage]);
 
   document.querySelectorAll(".genre-filter").forEach((element) => {
     element.addEventListener("click", () => {
