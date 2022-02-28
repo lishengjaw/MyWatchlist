@@ -18,6 +18,12 @@ import {
 import ItemCard from "./ItemCard";
 import { useLocation } from "react-router-dom";
 import { Badge } from "react-bootstrap";
+import {
+  selectColor,
+  selectRatingColor,
+  setErrorTimeout,
+} from "../controllers/UtilityController";
+import { debounce } from "lodash";
 
 const ItemPage = () => {
   const pathname = window.location.pathname.split("/");
@@ -37,11 +43,15 @@ const ItemPage = () => {
     setPageItem(null);
     setSeeMore(false);
     const fetchItems = async () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
       const data = await getItemById(id, isMovie);
       if (data && !data.id) {
+        setErrorTimeout(
+          setErrorMessage(`Invalid ${isMovie ? "movie" : "TV show"} ID`)
+        );
+
         return;
       }
+      window.scrollTo({ top: 0, behavior: "smooth" });
       const { casts, directors } = await getCastsAndDirectors(id, isMovie);
       const video_key = await getVideo(id, isMovie);
       const isFavourite = await checkInFavourites(id);
@@ -75,52 +85,29 @@ const ItemPage = () => {
     };
   }, [id, isMovie, location.key]);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      clearTimeout(timeout);
-      setErrorMessage(`No ${isMovie ? "movie" : "TV show"} found`);
-    }, 5000);
-  }, [isMovie, id]);
-
-  const selectRatingColor = (vote_average) => {
-    if (vote_average >= 9.0) {
-      return "green";
-    } else if (vote_average >= 8.0) {
-      return "greenyellow";
-    } else if (vote_average >= 7.0) {
-      return "yellow";
-    } else if (vote_average >= 6.0) {
-      return "orange";
-    } else {
-      return "red";
-    }
-  };
-
-  const selectFavouriteColor = (isFavourite) => {
-    return isFavourite ? "yellow" : "lightgrey";
-  };
-
-  const selectWatchLaterColor = (toWatchLater) => {
-    return toWatchLater ? "red" : "lightgrey";
-  };
-
-  const changeFavouriteState = () => {
+  const changeFavouriteState = debounce(() => {
     if (!pageItem.isFavourite) {
       addToFavourites(pageItem, isMovie);
     } else {
       removeFromFavourites(pageItem);
     }
-    setPageItem({ ...pageItem, isFavourite: !pageItem.isFavourite });
-  };
+    setPageItem({
+      ...pageItem,
+      isFavourite: !pageItem.isFavourite,
+    });
+  }, 1000);
 
-  const changeWatchLaterState = () => {
+  const changeWatchLaterState = debounce(() => {
     if (!pageItem.toWatchLater) {
       addToWatchLater(pageItem, isMovie);
     } else {
       removeFromWatchLater(pageItem);
     }
-    setPageItem({ ...pageItem, toWatchLater: !pageItem.toWatchLater });
-  };
+    setPageItem({
+      ...pageItem,
+      toWatchLater: !pageItem.toWatchLater,
+    });
+  }, 1000);
 
   return (
     <div className="item-wrapper">
@@ -166,7 +153,7 @@ const ItemPage = () => {
                   <div className="item-icon">
                     <FaHeart
                       style={{
-                        color: selectFavouriteColor(pageItem.isFavourite),
+                        color: selectColor(pageItem.isFavourite, null),
                       }}
                       onClick={changeFavouriteState}
                     />
@@ -174,7 +161,7 @@ const ItemPage = () => {
                   <div className="item-icon">
                     <FaBookmark
                       style={{
-                        color: selectWatchLaterColor(pageItem.toWatchLater),
+                        color: selectColor(null, pageItem.toWatchLater),
                       }}
                       onClick={changeWatchLaterState}
                     />

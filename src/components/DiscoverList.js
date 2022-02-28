@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   checkInFavourites,
   checkInWatchLater,
@@ -8,17 +7,12 @@ import Pagination from "./Pagination";
 import "../styles/DiscoverList.css";
 
 const DiscoverList = ({ temp, isMovie, isHidden }) => {
-  const [discoverList, setDiscoverList] = useState(temp);
-
-  useEffect(() => {
-    setDiscoverList(temp);
-  }, [temp]);
   return (
     <>
       <div className="discover">
-        {!isHidden && <h1>{`${isMovie ? "Movies" : "Tv Shows"}`}</h1>}
+        {!isHidden && <h1>{`${isMovie ? "Movies" : "TV Shows"}`}</h1>}
         <div className="discover-list">
-          {discoverList.map((item) => {
+          {temp.map((item) => {
             const { id } = item;
             return (
               <ItemCard

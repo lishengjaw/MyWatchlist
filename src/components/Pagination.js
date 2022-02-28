@@ -51,7 +51,10 @@ const PageNumbers = () => {
     <Pagination>
       <Pagination.Prev
         className={activePage === MIN_PAGE && `disabled`}
-        onClick={() => dispatch(previousPage())}
+        onClick={() => {
+          dispatch(previousPage());
+
+        }}
       />
       {pages}
       <Pagination.Next

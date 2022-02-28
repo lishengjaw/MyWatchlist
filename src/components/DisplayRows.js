@@ -1,55 +1,30 @@
 import "../styles/DisplayRows.css";
 import { FaHeart, FaBookmark } from "react-icons/fa";
-import { useState } from "react";
-import { Image } from "react-bootstrap";
+import { Badge, Image } from "react-bootstrap";
 import {
-  addToFavourites,
-  addToWatchLater,
   removeFromFavourites,
   removeFromWatchLater,
 } from "../controllers/DBController";
 import { useNavigate } from "react-router-dom";
-import { Badge } from "react-bootstrap";
+import {
+  selectColor,
+  selectRatingColor,
+} from "../controllers/UtilityController";
 
 const DisplayRows = (props) => {
   const { poster_path, title, vote_average, genre_list, name, isMovie, id } =
     props.data;
   const isFavourite = props.isFavourite;
   const toWatchLater = props.toWatchLater;
-  const [iconState, setIconState] = useState(isFavourite || toWatchLater);
   const navigate = useNavigate();
 
-  const selectRatingColor = (vote_average) => {
-    if (vote_average >= 9.0) {
-      return "green";
-    } else if (vote_average >= 8.0) {
-      return "greenyellow";
-    } else if (vote_average >= 7.0) {
-      return "yellow";
-    } else if (vote_average >= 6.0) {
-      return "orange";
-    } else {
-      return "red";
+  const removeItem = () => {
+    if(isFavourite){
+      removeFromFavourites(props.data);
     }
-  };
-
-  const selectColor = () => {
-    if (isFavourite) {
-      return isFavourite ? "yellow" : "lightgrey";
-    } else {
-      return toWatchLater ? "red" : "lightgrey";
+    else{
+      removeFromWatchLater(props.data);
     }
-  };
-
-  const changeState = () => {
-    if (!iconState) {
-      isFavourite ? addToFavourites(props.data) : addToWatchLater(props.data);
-    } else {
-      isFavourite
-        ? removeFromFavourites(props.data)
-        : removeFromWatchLater(props.data);
-    }
-    setIconState(!iconState);
   };
 
   return (
@@ -57,7 +32,6 @@ const DisplayRows = (props) => {
       <div
         className="display-row-left"
         onClick={() => {
-          console.log(isMovie);
           isMovie ? navigate(`/movies/${id}`) : navigate(`/tv-shows/${id}`);
         }}
       >
@@ -73,7 +47,6 @@ const DisplayRows = (props) => {
       <div
         className="display-row-center"
         onClick={() => {
-          console.log(isMovie);
           isMovie ? navigate(`/movies/${id}`) : navigate(`/tv-shows/${id}`);
         }}
       >
@@ -92,9 +65,15 @@ const DisplayRows = (props) => {
           {parseFloat(vote_average).toFixed(1)}
         </h6>
         {isFavourite ? (
-          <FaHeart style={{ color: selectColor() }} onClick={changeState} />
+          <FaHeart
+            style={{ color: selectColor(isFavourite, toWatchLater) }}
+            onClick={removeItem}
+          />
         ) : (
-          <FaBookmark style={{ color: selectColor() }} onClick={changeState} />
+          <FaBookmark
+            style={{ color: selectColor(isFavourite, toWatchLater) }}
+            onClick={removeItem}
+          />
         )}
       </div>
     </div>

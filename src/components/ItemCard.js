@@ -9,10 +9,14 @@ import {
   removeFromWatchLater,
 } from "../controllers/DBController";
 import { useNavigate } from "react-router";
+import {
+  selectColor,
+  selectRatingColor,
+} from "../controllers/UtilityController";
+import { debounce } from "lodash";
 
 const WatchlistCard = (props) => {
   const { id, poster_path, vote_average, isFavourite, toWatchLater } = props;
-
   const [favouriteState, setFavouriteState] = useState(false);
   const [watchLaterState, setWatchLaterState] = useState(false);
   const navigate = useNavigate();
@@ -30,64 +34,42 @@ const WatchlistCard = (props) => {
     return () => (unmounted = true);
   }, [isFavourite, toWatchLater]);
 
-  const selectRatingColor = (vote_average) => {
-    if (vote_average >= 9.0) {
-      return "green";
-    } else if (vote_average >= 8.0) {
-      return "greenyellow";
-    } else if (vote_average >= 7.0) {
-      return "yellow";
-    } else if (vote_average >= 6.0) {
-      return "orange";
-    } else {
-      return "red";
-    }
-  };
-
-  const selectFavouriteColor = (isFavourite) => {
-    return isFavourite ? "yellow" : "lightgrey";
-  };
-
-  const selectWatchLaterColor = (toWatchLater) => {
-    return toWatchLater ? "red" : "lightgrey";
-  };
-
-  const changeFavouriteState = (isMovie) => {
+  const changeFavouriteState = debounce((isMovie) => {
     if (!favouriteState) {
       addToFavourites(props, isMovie);
     } else {
       removeFromFavourites(props);
     }
     setFavouriteState(!favouriteState);
-  };
+  }, 1000);
 
-  const changeWatchLaterState = (isMovie) => {
+  const changeWatchLaterState = debounce((isMovie) => {
     if (!watchLaterState) {
       addToWatchLater(props, isMovie);
     } else {
       removeFromWatchLater(props);
     }
     setWatchLaterState(!watchLaterState);
-  };
+  }, 1000);
 
   return (
     <Card key={id}>
       <div className="card-icon">
         <FaHeart
-          style={{ color: selectFavouriteColor(favouriteState) }}
-          onClick={() =>
+          style={{ color: selectColor(favouriteState, null) }}
+          onClick={() => {
             changeFavouriteState(
               window.location.pathname.split("/")[1] === "movies"
-            )
-          }
+            );
+          }}
         />
         <FaBookmark
-          style={{ color: selectWatchLaterColor(watchLaterState) }}
-          onClick={() =>
+          style={{ color: selectColor(null, watchLaterState) }}
+          onClick={() => {
             changeWatchLaterState(
               window.location.pathname.split("/")[1] === "movies"
-            )
-          }
+            );
+          }}
         />
       </div>
       <div

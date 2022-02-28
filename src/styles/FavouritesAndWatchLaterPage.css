@@ -1,8 +1,8 @@
-.watch-later-body{
+.favourites-and-watch-later-body{
     display: flex;
 }
 
-.watch-later-page h1 {
+.favourites-and-watch-later-page h1 {
     margin: 10px 0 30px;
     text-align: center;
     background-color: #0d253f;

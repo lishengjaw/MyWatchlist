@@ -28,14 +28,29 @@ const addToFavourites = async (props, isMovie) => {
   let data = null;
   const { id } = props;
   const { genres } = await getItemById(id, isMovie);
-  const genre_list = genres.map(genre => genre.name);
-  if(isMovie){
+  const genre_list = genres.map((genre) => genre.name);
+  if (isMovie) {
     const { release_date, id, poster_path, title, vote_average } = props;
-    data = { release_date, id, poster_path, title, vote_average, genre_list, isMovie };
-  }
-  else{
+    data = {
+      release_date,
+      id,
+      poster_path,
+      title,
+      vote_average,
+      genre_list,
+      isMovie,
+    };
+  } else {
     const { first_air_date, id, poster_path, name, vote_average } = props;
-    data = { first_air_date, id, poster_path, name, vote_average, genre_list, isMovie };
+    data = {
+      first_air_date,
+      id,
+      poster_path,
+      name,
+      vote_average,
+      genre_list,
+      isMovie,
+    };
   }
 
   db.collection("favourites")
@@ -60,14 +75,29 @@ const addToWatchLater = async (props, isMovie) => {
   let data = null;
   const { id } = props;
   const { genres } = await getItemById(id, isMovie);
-  const genre_list = genres.map(genre => genre.name);
-  if(isMovie){
+  const genre_list = genres.map((genre) => genre.name);
+  if (isMovie) {
     const { release_date, poster_path, title, vote_average } = props;
-    data = { release_date, id, poster_path, title, vote_average, genre_list, isMovie };
-  }
-  else{
+    data = {
+      release_date,
+      id,
+      poster_path,
+      title,
+      vote_average,
+      genre_list,
+      isMovie,
+    };
+  } else {
     const { first_air_date, poster_path, name, vote_average } = props;
-    data = { first_air_date, id, poster_path, name, vote_average, genre_list, isMovie };
+    data = {
+      first_air_date,
+      id,
+      poster_path,
+      name,
+      vote_average,
+      genre_list,
+      isMovie,
+    };
   }
 
   db.collection("watch-later")

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectActivePage,
@@ -7,8 +7,13 @@ import {
 } from "../features/watchlistPaginationSlice";
 import SearchBar from "./SearchBar";
 import DiscoverList from "./DiscoverList";
-import { getDiscoverItems, searchDiscoverItems } from "../controllers/APIController";
+import {
+  getDiscoverItems,
+  searchDiscoverItems,
+} from "../controllers/APIController";
 import { selectSearchText } from "../features/searchTextSlice";
+import { setErrorTimeout } from "../controllers/UtilityController";
+import { debounce } from "lodash";
 
 const DiscoverPage = ({ isMovie }) => {
   const [discoverList, setDiscoverList] = useState([]);
@@ -20,40 +25,52 @@ const DiscoverPage = ({ isMovie }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behaviour: "smooth" });
-    const fetchMovies = async (isListEmpty) => {
-      let data = null;
-      if (isListEmpty) {
-        data = await getDiscoverItems(isMovie, activePage);
-      } else {
-        data = await searchDiscoverItems(isMovie, searchText, activePage);
-      }
-      setDiscoverList(data.results);
-      dispatch(setTotalPages(data.total_pages));
-    };
-    if (searchText.length === 0) {
-      fetchMovies(true);
-    } else {
-      fetchMovies(false);
-    }
-  }, [searchText, activePage]);
-
-  useEffect(() => {
     dispatch(setActivePage(1));
-  }, [searchText]);
+  }, [dispatch, searchText]);
+
+  const fetchItems = useMemo(
+    () =>
+      debounce(async (isListEmpty) => {
+        setErrorMessage(`Loading ${isMovie ? "movies" : "TV shows"}...`);
+        let data = null;
+        if (isListEmpty) {
+          data = await getDiscoverItems(isMovie, activePage);
+        } else {
+          data = await searchDiscoverItems(isMovie, searchText, activePage);
+        }
+        if (data.results.length > 0) {
+          setDiscoverList(data.results);
+          dispatch(setTotalPages(data.total_pages));
+          window.scrollTo({ top: 0, behaviour: "smooth" });
+        } else {
+          setDiscoverList([]);
+          setErrorTimeout(
+            setErrorMessage,
+            `No ${isMovie ? "movies" : "TV shows"} found`
+          );
+        }
+      }, 1000),
+    [dispatch, isMovie, searchText, activePage]
+  );
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      clearTimeout(timeout);
-      setErrorMessage(`No ${isMovie ? "movies" : "TV shows"} found`);
-    }, 10000);
-  }, []);
+    if (searchText.length === 0) {
+      fetchItems(true);
+    } else {
+      fetchItems(false);
+    }
+    return () => fetchItems.cancel();
+  }, [fetchItems, searchText.length]);
 
   return (
     <div className="background">
-      <SearchBar />
+      <SearchBar
+        setDiscoverList={setDiscoverList}
+        setErrorMessage={setErrorMessage}
+        isMovie
+      />
       {discoverList && discoverList.length > 0 ? (
-        <DiscoverList temp={discoverList} isMovie />
+        <DiscoverList temp={discoverList} isMovie={isMovie} />
       ) : (
         <h1 className="discover-no-search-results">{errorMessage}</h1>
       )}

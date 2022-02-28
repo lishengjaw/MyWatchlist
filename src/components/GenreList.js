@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getGenres, getItemsByGenre } from "../controllers/APIController";
 import { Badge } from "react-bootstrap";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
@@ -10,6 +10,12 @@ import {
 } from "../features/watchlistPaginationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import DiscoverList from "./DiscoverList";
+import {
+  applyActiveClass,
+  replaceActiveClass,
+  setErrorTimeout,
+} from "../controllers/UtilityController";
+import { debounce } from "lodash";
 
 const GenreFilters = ({ isMovie }) => {
   const [genres, setGenres] = useState([]);
@@ -24,31 +30,41 @@ const GenreFilters = ({ isMovie }) => {
   useEffect(() => {
     const fetchGenresFilters = async (isMovie) => {
       const data = await getGenres(isMovie);
-      setGenres(data.genres);
-      setSelectedGenre(data.genres[0].id);
-      applyActiveClass();
+      if (data.genres.length > 0) {
+        setGenres(data.genres);
+        setSelectedGenre(data.genres[0].id);
+        applyActiveClass();
+      }
     };
     fetchGenresFilters(isMovie);
   }, [isMovie]);
 
   useEffect(() => {
-    const fetchItemsByGenre = async (genre) => {
-      const data = await getItemsByGenre(isMovie, genre, 1);
-      setItemsByGenre(data.results);
-      dispatch(setActivePage(1));
-      dispatch(setTotalPages(data.total_pages));
-    };
-    fetchItemsByGenre(selectedGenre);
-  }, [isMovie, selectedGenre]);
+    dispatch(setActivePage(1));
+  }, [dispatch, selectedGenre]);
+
+  const fetchItemsByGenre = useMemo(
+    () =>
+      debounce(async (genre) => {
+        setErrorMessage(`Loading ${isMovie ? "movie..." : "TV show..."}`);
+        const data = await getItemsByGenre(isMovie, genre, activePage);
+        if (data.results.length > 0) {
+          setItemsByGenre(data.results);
+          dispatch(setTotalPages(data.total_pages));
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          setErrorTimeout(
+            setErrorMessage(`No ${isMovie ? "movies" : "TV shows"} found`)
+          );
+        }
+      }, 1000),
+    [dispatch, isMovie, activePage]
+  );
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    const fetchItemsByGenre = async (genre) => {
-      const data = await getItemsByGenre(isMovie, genre, activePage);
-      setItemsByGenre(data.results);
-    };
     fetchItemsByGenre(selectedGenre);
-  }, [isMovie, activePage]);
+    return () => fetchItemsByGenre.cancel();
+  }, [fetchItemsByGenre, activePage, selectedGenre]);
 
   document.querySelectorAll(".genre-filter").forEach((element) => {
     element.addEventListener("click", () => {
@@ -57,39 +73,6 @@ const GenreFilters = ({ isMovie }) => {
       setSelectedGenre(id);
     });
   });
-
-  useEffect(() => {
-    setTimeout(() => {
-      setErrorMessage(`No ${isMovie ? "movies" : "TV shows"} found`);
-    }, 10000);
-  }, []);
-
-  const applyActiveClass = () => {
-    const first_genre_filter =
-      document.getElementsByClassName("genre-filter")[0];
-    first_genre_filter.className += " genre-filter-active";
-  };
-
-  const replaceActiveClass = (genre) => {
-    const genre_filter_active = document.getElementsByClassName(
-      "genre-filter-active"
-    );
-    for (let i = 0; i < genre_filter_active.length; i++) {
-      const element = genre_filter_active[i];
-      element.className = element.className.replace("genre-filter-active", "");
-    }
-    const new_genre_filter_active = document.querySelector(
-      `[data-id="${genre}"]`
-    );
-    new_genre_filter_active.className += " genre-filter-active";
-  };
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      clearTimeout(timeout);
-      setErrorMessage(`No ${isMovie ? "movie" : "TV show"} found`);
-    }, 10000);
-  }, [isMovie]);
 
   return (
     <div className="genres-page background">
