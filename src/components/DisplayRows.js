@@ -10,6 +10,7 @@ import {
   selectColor,
   selectRatingColor,
 } from "../controllers/UtilityController";
+import { debounce } from "lodash";
 
 const DisplayRows = (props) => {
   const { poster_path, title, vote_average, genre_list, name, isMovie, id } =
@@ -18,14 +19,14 @@ const DisplayRows = (props) => {
   const toWatchLater = props.toWatchLater;
   const navigate = useNavigate();
 
-  const removeItem = () => {
+  const removeItem = debounce(() => {
     if(isFavourite){
       removeFromFavourites(props.data);
     }
     else{
       removeFromWatchLater(props.data);
     }
-  };
+  }, 500);
 
   return (
     <div className="display-row">

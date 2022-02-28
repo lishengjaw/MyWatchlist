@@ -95,7 +95,7 @@ const ItemPage = () => {
       ...pageItem,
       isFavourite: !pageItem.isFavourite,
     });
-  }, 1000);
+  }, 500);
 
   const changeWatchLaterState = debounce(() => {
     if (!pageItem.toWatchLater) {
@@ -107,7 +107,7 @@ const ItemPage = () => {
       ...pageItem,
       toWatchLater: !pageItem.toWatchLater,
     });
-  }, 1000);
+  }, 500);
 
   return (
     <div className="item-wrapper">

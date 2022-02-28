@@ -41,7 +41,7 @@ const WatchlistCard = (props) => {
       removeFromFavourites(props);
     }
     setFavouriteState(!favouriteState);
-  }, 1000);
+  }, 500);
 
   const changeWatchLaterState = debounce((isMovie) => {
     if (!watchLaterState) {
@@ -50,7 +50,7 @@ const WatchlistCard = (props) => {
       removeFromWatchLater(props);
     }
     setWatchLaterState(!watchLaterState);
-  }, 1000);
+  }, 500);
 
   return (
     <Card key={id}>
