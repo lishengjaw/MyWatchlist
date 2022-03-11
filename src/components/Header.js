@@ -1,24 +1,33 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 import "../styles/Header.css";
 import { FaFilm } from "react-icons/fa";
+import SearchBar from "./SearchBar";
+import headerList from "../data/header-list";
 
 const Header = () => {
+  const pathname = `/${window.location.pathname.split("/")[1]}`;
   return (
-    <Navbar expand="md">
+    <Navbar expand="lg" className="sticky-top">
       <Container>
-        <Navbar.Brand href="/">
+        <Navbar.Brand href="/" className="text-light">
           <FaFilm />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="/movies">Discover Movies</Nav.Link>
-            <Nav.Link href="/tv-shows">Discover TV Shows</Nav.Link>
-            <Nav.Link href="/movies/genres">Movie Genres</Nav.Link>
-            <Nav.Link href="/tv-shows/genres">TV Show Genres</Nav.Link>
-            <Nav.Link href="/favourites">Favourites</Nav.Link>
-            <Nav.Link href="/watch-later">Watch Later</Nav.Link>
+        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Collapse id="navbarScroll">
+          <Nav className="me-auto flex-fill justify-content-evenly">
+            {headerList.map(({ id, link, title }) => {
+              return (
+                <Nav.Link
+                  key={id}
+                  href={link}
+                  className={`text-light ${pathname === link && "nav-active"}`}
+                >
+                  {title}
+                </Nav.Link>
+              );
+            })}
           </Nav>
+          <SearchBar />
         </Navbar.Collapse>
       </Container>
     </Navbar>

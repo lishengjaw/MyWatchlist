@@ -53,9 +53,10 @@ const WatchlistCard = (props) => {
   }, 500);
 
   return (
-    <Card key={id}>
-      <div className="card-icon">
+    <Card key={id} className="border-0 position-relative mb-4">
+      <div className="card-icons p-2 d-flex">
         <FaHeart
+          className="card-icon"
           style={{ color: selectColor(favouriteState, null) }}
           onClick={() => {
             changeFavouriteState(
@@ -64,6 +65,7 @@ const WatchlistCard = (props) => {
           }}
         />
         <FaBookmark
+          className="card-icon"
           style={{ color: selectColor(null, watchLaterState) }}
           onClick={() => {
             changeWatchLaterState(
@@ -89,7 +91,7 @@ const WatchlistCard = (props) => {
           }
         />
         <div
-          className="card-rating"
+          className="card-ratings item-ratings position-absolute"
           style={{ backgroundColor: selectRatingColor(vote_average) }}
         >
           {parseFloat(vote_average).toFixed(1)}

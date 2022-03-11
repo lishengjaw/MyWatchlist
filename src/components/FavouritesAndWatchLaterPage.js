@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
+import { Spinner } from "react-bootstrap";
 import { db } from "../firebase";
 import DisplayList from "./DisplayList";
 import GenreCounter from "./GenreCounter";
-import "../styles/FavouritesAndWatchLaterPage.css";
-import { setErrorTimeout } from "../controllers/UtilityController";
 
 const FavouritesAndWatchLaterPage = ({ isFavourite }) => {
   const [itemList, setItemList] = useState([]);
-  const [errorMessage, setErrorMessage] = useState(
-    `Loading ${isFavourite ? "favourites" : "watch later"}...`
-  );
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     db.collection(`${isFavourite ? "favourites" : "watch-later"}`)
@@ -21,28 +18,30 @@ const FavouritesAndWatchLaterPage = ({ isFavourite }) => {
             data: doc.data(),
           }))
         );
-        if (snapshot.empty) {
-          setErrorTimeout(
-            setErrorMessage(
-              `No ${isFavourite ? "favourites" : "watch later"} found`
-            )
-          );
-        }
+        setLoading(false);
       });
   }, [isFavourite]);
 
   return (
     <div className="background">
-      {itemList && itemList.length > 0 ? (
-        <div className="favourites-and-watch-later-page">
-          <h1>{`My ${isFavourite ? "Favourites" : "Watch Later"}`}</h1>
-          <div className="favourites-and-watch-later-body">
-            <GenreCounter temp={itemList} />
-            <DisplayList favourites={isFavourite} temp={itemList} />
-          </div>
-        </div>
+      {loading ? (
+        <Spinner animation="border" variant="dark" />
       ) : (
-        <h1 className="list-no-search-results">{errorMessage}</h1>
+        <>
+          {itemList?.length > 0 ? (
+            <div className="favourites-and-watch-later-page">
+              <h1 className="page-header">{`My ${
+                isFavourite ? "Favourites" : "Watch Later"
+              }`}</h1>
+              <div className="d-flex">
+                <GenreCounter temp={itemList} />
+                <DisplayList favourites={isFavourite} temp={itemList} />
+              </div>
+            </div>
+          ) : (
+            <h1 className="error">No results</h1>
+          )}
+        </>
       )}
     </div>
   );

@@ -1,24 +1,11 @@
-.genres-page h1:first-child {
-    margin: 10px 0 30px;
-    text-align: center;
-    background-color: #0d253f;
-    color: whitesmoke;
-    padding: 3px 0 8px;
-    border-radius: 10px;
-}
-
 .genre-filters-row{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
     cursor: pointer;
 }
 
 .genre-filters{
-    display: flex;
     overflow-x: auto;
-    width: 85vw;
     scroll-behavior: smooth;
+    width: 85vw;
 }
 
 .genre-filters::-webkit-scrollbar {
@@ -31,14 +18,4 @@
 
 .genre-filter-active{
     opacity: 1;
-}
-
-.genre-no-search-results{
-    display: flex;
-    height: calc(100vh - 300px);
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
-    text-align: center;
-    color: #0d253f;
 }

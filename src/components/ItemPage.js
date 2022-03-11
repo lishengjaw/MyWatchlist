@@ -17,11 +17,10 @@ import {
 } from "../controllers/APIController";
 import ItemCard from "./ItemCard";
 import { useLocation } from "react-router-dom";
-import { Badge } from "react-bootstrap";
+import { Badge, Spinner, Button, Image } from "react-bootstrap";
 import {
   selectColor,
   selectRatingColor,
-  setErrorTimeout,
 } from "../controllers/UtilityController";
 import { debounce } from "lodash";
 
@@ -31,26 +30,16 @@ const ItemPage = () => {
   const id = parseInt(pathname[2]);
 
   const [pageItem, setPageItem] = useState(null);
-  const [seeMore, setSeeMore] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(
-    `Loading ${isMovie ? "movie..." : "TV show..."}`
-  );
+  const [overviewOpen, setOverviewOpen] = useState(false);
+  const [castsOpen, setCastsOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
     let isMounted = true;
-    setErrorMessage(`Loading ${isMovie ? "movie..." : "TV show..."}`);
     setPageItem(null);
-    setSeeMore(false);
     const fetchItems = async () => {
       const data = await getItemById(id, isMovie);
-      if (data && !data.id) {
-        setErrorTimeout(
-          setErrorMessage(`Invalid ${isMovie ? "movie" : "TV show"} ID`)
-        );
-
-        return;
-      }
       window.scrollTo({ top: 0, behavior: "smooth" });
       const { casts, directors } = await getCastsAndDirectors(id, isMovie);
       const video_key = await getVideo(id, isMovie);
@@ -78,7 +67,9 @@ const ItemPage = () => {
       if (isMounted) {
         setPageItem(newData);
       }
+      setLoading(false);
     };
+    setLoading(true);
     fetchItems();
     return () => {
       isMounted = false;
@@ -108,204 +99,224 @@ const ItemPage = () => {
       toWatchLater: !pageItem.toWatchLater,
     });
   }, 500);
-
   return (
-    <div className="item-wrapper">
-      {pageItem && pageItem ? (
+    <div className="background position-relative p-0">
+      {loading ? (
+        <Spinner animation="border" variant="dark" />
+      ) : (
         <>
-          <img
-            className="item-background"
-            src={`${process.env.REACT_APP_POSTER_PATH}${pageItem.backdrop_path}`}
-            alt=""
-          />
-          <div className="item-page">
-            <div className="item-poster">
-              <img
-                src={`${process.env.REACT_APP_POSTER_PATH}${pageItem.poster_path}`}
-                alt=""
-              />
-            </div>
-
-            <div className="item-info">
-              <h1>
-                {isMovie &&
-                  pageItem.start_year &&
-                  `${pageItem.title || pageItem.name} (${pageItem.start_year})`}
-                {!isMovie &&
-                  pageItem.start_year &&
-                  `${pageItem.title || pageItem.name} (${pageItem.start_year}`}
-                {pageItem.end_year &&
-                  pageItem.status === "Ended" &&
-                  `-${pageItem.end_year})`}
-                {pageItem.end_year &&
-                  pageItem.status === "Returning Series" &&
-                  "-Present)"}
-              </h1>
-              <div className="item-subheader">
-                <h6
-                  style={{
-                    backgroundColor: selectRatingColor(pageItem.vote_average),
-                  }}
-                >
-                  {pageItem.vote_average}
-                </h6>
-                <div className="item-icons">
-                  <div className="item-icon">
-                    <FaHeart
+          {pageItem ? (
+            <>
+              {pageItem.backdrop_path && (
+                <Image
+                  className="item-background position-absolute w-100 h-100 opacity-25"
+                  src={`${process.env.REACT_APP_POSTER_PATH}${pageItem.backdrop_path}`}
+                />
+              )}
+              <div className="item-info d-flex p-4 w-100 position-absolute">
+                <div className="item-left d-flex flex-column align-items-center">
+                  <Image
+                    className="item-poster mx-5"
+                    src={
+                      pageItem.poster_path
+                        ? `${process.env.REACT_APP_POSTER_PATH}${pageItem.poster_path}`
+                        : `/images/no-poster-placeholder.png`
+                    }
+                  />
+                  <div className="item-icons d-flex mt-3">
+                    <h6
+                      className="item-icon item-ratings"
                       style={{
-                        color: selectColor(pageItem.isFavourite, null),
+                        backgroundColor: selectRatingColor(
+                          pageItem.vote_average
+                        ),
                       }}
-                      onClick={changeFavouriteState}
-                    />
-                  </div>
-                  <div className="item-icon">
-                    <FaBookmark
-                      style={{
-                        color: selectColor(null, pageItem.toWatchLater),
-                      }}
-                      onClick={changeWatchLaterState}
-                    />
-                  </div>
-                  {pageItem.video_key && (
-                    <div className="item-icon">
+                    >
+                      {pageItem.vote_average}
+                    </h6>
+                    <h6 className="item-icon rounded-circle d-flex justify-content-center align-items-center p-2">
+                      <FaHeart
+                        style={{
+                          color: selectColor(pageItem.isFavourite, null),
+                        }}
+                        onClick={changeFavouriteState}
+                      />
+                    </h6>
+                    <h6 className="item-icon rounded-circle d-flex justify-content-center align-items-center p-2">
+                      <FaBookmark
+                        style={{
+                          color: selectColor(null, pageItem.toWatchLater),
+                        }}
+                        onClick={changeWatchLaterState}
+                      />
+                    </h6>
+                    {pageItem.video_key && (
                       <a
+                        className="item-icon rounded-circle d-flex justify-content-center align-items-center p-2 text-light"
                         href={`${process.env.REACT_APP_VIDEO_PATH}?key=${pageItem.video_key}`}
                         target="_blank"
                         rel="noreferrer"
                       >
                         <FaVideo />
                       </a>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className="item-tags">
-                {pageItem.genres?.map((genre, index) => {
-                  const { id, name } = genre;
-                  return (
-                    <Badge pill key={id}>
-                      {name}
-                    </Badge>
-                  );
-                })}
-                {pageItem.number_of_seasons && pageItem.number_of_episodes && (
-                  <>
+                <div className="item-right">
+                  <div className="item-title mb-2">
+                    <h1 className="text-light">
+                      {pageItem.name || pageItem.title}
+                      {isMovie || (!isMovie && !pageItem.end_year)
+                        ? ` (${pageItem.start_year})`
+                        : ` (${pageItem.start_year}-${pageItem.end_year})`}
+                    </h1>
+                  </div>
+                  <div className="item-tagline mb-3 text-light">
+                    {pageItem.tagline}
+                  </div>
+                  <div className="item-tags mb-2">
+                    {pageItem.genres?.map(({ id, name }) => {
+                      return (
+                        <Badge pill key={id}>
+                          {name}
+                        </Badge>
+                      );
+                    })}
                     <Badge pill>
-                      {pageItem.number_of_seasons > 1
-                        ? `${pageItem.number_of_seasons} seasons`
-                        : `${pageItem.number_of_seasons} season`}
+                      {pageItem.number_of_seasons &&
+                        `${pageItem.number_of_seasons} season(s)`}
                     </Badge>
                     <Badge pill>
-                      {pageItem.number_of_episodes > 1
-                        ? `${pageItem.number_of_episodes} episodes`
-                        : `${pageItem.number_of_episodes} episode`}
+                      {pageItem.number_of_episodes &&
+                        `${pageItem.number_of_episodes} episode(s)`}
                     </Badge>
-                  </>
-                )}
-              </div>
-              {pageItem.networks &&
-                pageItem.networks.map((network) => {
-                  const { id, logo_path } = network;
-                  return (
-                    <img
-                      key={id}
-                      className="item-network"
-                      src={`${process.env.REACT_APP_POSTER_PATH}${logo_path}`}
-                      alt=""
-                    />
-                  );
-                })}
-              {pageItem.tagline.length > 0 && (
-                <p className="item-tagline">{pageItem.tagline}</p>
-              )}
-              <h3>Overview</h3>
-              <p>{pageItem.overview || "-"}</p>
-              <div className="item-people">
-                <div className="item-directors">
-                  {pageItem.directors.length > 0 ? (
-                    <div>
+                  </div>
+                  <div className="item-networks mb-2">
+                    {pageItem.networks?.map(({ id, logo_path }) => {
+                      return (
+                        <img
+                          key={id}
+                          className="item-network d-inline-block"
+                          src={`${process.env.REACT_APP_POSTER_PATH}${logo_path}`}
+                          alt=""
+                        />
+                      );
+                    })}
+                  </div>
+                  <div className="item-overview text-light mb-2">
+                    <h3>Overview</h3>
+                    <p>
+                      {pageItem.overview.slice(0, 200) || "-"}
+                      {overviewOpen && pageItem.overview.slice(200)}
+                      {pageItem.overview.length > 200 && (
+                        <Button
+                          className="read-more-btn border-0 shadow-none text-dark"
+                          onClick={() => setOverviewOpen(!overviewOpen)}
+                        >
+                          {overviewOpen ? "Read Less" : "Read More"}
+                        </Button>
+                      )}
+                    </p>
+                  </div>
+                  <div className="item-people d-flex text-light">
+                    <div className="item-director">
                       <h5>Director(s):</h5>
-                      {pageItem.directors.map((director, index) => {
-                        const { id, name } = director;
-                        return pageItem.directors.length - 1 === index ? (
-                          <span key={id}>{`${name} `}</span>
-                        ) : (
-                          <span key={id}>{`${name}, `}</span>
-                        );
-                      })}
-                    </div>
-                  ) : pageItem.created_by.length > 0 ? (
-                    <div>
-                      <h5>Director(s):</h5>
-                      {pageItem.created_by.map((director, index) => {
-                        const { id, name } = director;
-                        return pageItem.created_by.length - 1 === index ? (
-                          <span key={id}>{`${name} `}</span>
-                        ) : (
-                          <span key={id}>{`${name}, `}</span>
-                        );
-                      })}
-                    </div>
-                  ) : (
-                    <h5>Director(s): -</h5>
-                  )}
-                </div>
-                <div className="item-casts">
-                  {pageItem.casts.length > 0 ? (
-                    <div>
-                      <h5>Main Casts:</h5>
-                      {seeMore
-                        ? pageItem.casts.map((cast, index) => {
-                            const { id, name } = cast;
-                            return pageItem.casts.length - 1 === index ? (
-                              <span key={id}>{`${name} `}</span>
-                            ) : (
-                              <span key={id}>{`${name}, `}</span>
-                            );
-                          })
-                        : pageItem.casts.slice(0, 10).map((cast, index) => {
-                            const { id, name } = cast;
-                            return pageItem.casts.length - 1 === index ? (
-                              <span key={id}>{`${name} `}</span>
+                      {pageItem.directors?.length > 0 ||
+                      pageItem.created_by?.length > 0 ? (
+                        <>
+                          {pageItem.directors?.map(({ id, name }, index) => {
+                            return pageItem.directors.length - 1 === index ? (
+                              <span key={id}>{`${name}`}</span>
                             ) : (
                               <span key={id}>{`${name}, `}</span>
                             );
                           })}
-                      {pageItem.casts.length > 10 && (
-                        <button onClick={() => setSeeMore(!seeMore)}>
-                          {seeMore ? "See Less" : "See More"}
-                        </button>
+                          {pageItem.created_by?.map(({ id, name }, index) => {
+                            return pageItem.created_by.length - 1 === index ? (
+                              <span key={id}>{`${name}`}</span>
+                            ) : (
+                              <span key={id}>{`${name}, `}</span>
+                            );
+                          })}
+                        </>
+                      ) : (
+                        <>-</>
                       )}
                     </div>
-                  ) : (
-                    <h5>Main Casts: -</h5>
-                  )}
+                    <div className="item-casts">
+                      <h5>Casts:</h5>
+                      {pageItem.casts?.length > 0 ? (
+                        <p>
+                          {pageItem.casts
+                            .slice(0, 10)
+                            .map(({ id, name }, index) => {
+                              const maxLength = Math.min(
+                                pageItem.casts.length,
+                                10
+                              );
+                              return maxLength - 1 === index ? (
+                                <span key={id}>{`${name}`}</span>
+                              ) : (
+                                <span key={id}>{`${name}, `}</span>
+                              );
+                            })}
+                          {castsOpen && pageItem.casts.length > 10 && (
+                            <span>, </span>
+                          )}
+                          {castsOpen &&
+                            pageItem.casts
+                              .slice(10)
+                              .map(({ id, name }, index) => {
+                                return pageItem.casts.length - 11 === index ? (
+                                  <span key={id}>{`${name}`}</span>
+                                ) : (
+                                  <span key={id}>{`${name}, `}</span>
+                                );
+                              })}
+                          {pageItem.casts.length > 10 && (
+                            <Button
+                              className="read-more-btn border-0 shadow-none text-dark"
+                              onClick={() => setCastsOpen(!castsOpen)}
+                            >
+                              {castsOpen ? "Read Less" : "Read More"}
+                            </Button>
+                          )}
+                        </p>
+                      ) : (
+                        <>-</>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          {pageItem.recommended_list && pageItem.recommended_list.length > 0 && (
-            <div className="item-recommend">
-              <h3>{`Recommended ${isMovie ? "movies" : "TV shows"}`}</h3>
-              <div className="item-recommend-list">
-                {pageItem.recommended_list.map((item) => {
-                  const { id } = item;
-                  return (
-                    <div className="item-recommend-card" key={id}>
-                      <ItemCard
-                        {...item}
-                        isFavourite={checkInFavourites(id)}
-                        toWatchLater={checkInWatchLater(id)}
-                      />
+              <div className="item-recommendations w-100 p-3">
+                {pageItem.recommended_list?.length > 0 && (
+                  <>
+                    <h2 className="text-light">{`Recommended ${
+                      isMovie ? "movies" : "TV shows"
+                    }`}</h2>
+                    <div className="item-recommendations-list d-flex overflow-auto">
+                      {pageItem.recommended_list.map((item) => {
+                        const { id } = item;
+                        return (
+                          <div className="item-recommendation-card" key={id}>
+                            <ItemCard
+                              {...item}
+                              isFavourite={checkInFavourites(id)}
+                              toWatchLater={checkInWatchLater(id)}
+                            />
+                          </div>
+                        );
+                      })}
                     </div>
-                  );
-                })}
+                  </>
+                )}
               </div>
-            </div>
+            </>
+          ) : (
+            <h1 className="error">Invalid ID</h1>
           )}
         </>
-      ) : (
-        <h1 className="list-no-search-results">{errorMessage}</h1>
       )}
     </div>
   );

@@ -1,33 +1,6 @@
-.discover-list,
-.genres-list
-{
-    display: grid;
+.discover-list{
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 1rem;
-}
-
-.discover h1
-{
-    margin: 10px 0 30px;
-    text-align: center;
-    background-color: #0d253f;
-    color: whitesmoke;
-    padding: 3px 0 8px;
-    border-radius: 10px;
-}
-
-.discover h3{
-    text-align: center; 
-}
-
-.discover-no-search-results{
-    display: flex;
-    height: calc(100vh - 164px);
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
-    text-align: center;
-    color: #0d253f;
 }
 
 @media screen and (max-width: 1200px) {

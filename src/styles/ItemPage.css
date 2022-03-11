@@ -1,175 +1,87 @@
-.item-wrapper{
-    position: relative;
-    background-color: rgb(13, 37, 63, 0.6);
-    padding: 20px 50px;
-    min-height: calc(100vh - 56px);
-}
-
 .item-background{
-    opacity: 0.2;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
     object-fit: cover;
 }
 
-.item-page{
-    color: whitesmoke;
-    background-position: top;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border: none;
-    display: flex;
-    align-items: flex-start;
-    width: 100%;
-    position: relative;
-}   
-
-.item-header{
-    border: none;
-    padding: 0;
-}
-
-.item-poster{
+.item-left{
     flex: 0.3;
 }
 
-.item-poster img{
-    width: 90%;
-    border-radius: 40px;
-}
-
-.item-info{
-    padding: 0 30px;
+.item-right{
     flex: 0.7;
 }
 
-.item-header button{
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    z-index: 999;
-    background-color: whitesmoke !important;
+.item-poster{
+    border-radius: 20px;
+    height: 70vh;
 }
 
-.item-subheader{
-    display: flex;
-}
-
-.item-subheader h6{
-    font-size: 0.9rem;
-    color: black;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 0.15rem solid #0d253f;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 15px 15px 0;
-}
-
-.item-icons{
-    display: flex;
+.item-tagline{
+    font-style: italic;
+    font-weight: 600;
 }
 
 .item-icon{
+    margin-right: 15px;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 15px 15px 0;
+}
+
+.item-icon:not(:first-child){
     background-color: #0d253f;
     cursor: pointer;
-}
-
-.item-icon a{
-    margin: 0 -2px 5px 0;
-    color: whitesmoke;
-    text-decoration: none;
-}
-
-.item-tags{
-    display: flex;
-    white-space: nowrap;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-}
-
-.badge{
-    color: rgb(239, 239, 241) !important;
-    background-color: #0d253f !important;
-    font-size: 0.9rem;
-    font-weight: bold;
-    margin: 0 5px 5px 0;
 }
 
 .item-network{
     max-width: 70px;
     max-height: 30px;
     object-fit: contain;
-    margin-bottom: 15px;
+    margin-right: 1rem;
 }
 
-.item-tagline{
-    opacity: 0.8;
-    font-style: italic;
+.item-overview p{
+    max-height: 15vh;
+    overflow: auto;
 }
 
-.item-people{
-    display: flex;
-    flex-wrap: wrap;
+.read-more-btn{
+    font-weight: bold;
+    padding-top: 0.1rem;
+    padding-left: 0.5rem;
 }
 
-.item-directors{
+.item-director{
     flex: 0.3;
 }
 
 .item-casts{
-    height: 175px;
-    overflow-y: auto;
     flex: 0.7;
 }
 
-.item-casts button{
-    border: none;
-    background-color: transparent;
-    font-weight: bold;
-    color: #0d253f;
-    padding: 0;
+.item-casts p{
+    max-height: 20vh;
+    overflow: auto;
 }
 
-.item-recommend{
-    margin-top: 10px;
+.item-recommendations{
+    position: absolute;
+    top: calc(90vh + 1px);
+    background-color: rgb(13, 37, 63, 0.6);
 }
 
-.item-recommend h3{
-    color: whitesmoke;
-}
-
-.item-recommend-list{
-    display: flex;
+.item-recommendations-list{
     overflow: auto hidden;
 }
 
-.item-recommend-card{
-    margin: -20px 0 -20px -10px;
-    transform: scale(0.85);
+.item-recommendation-card{
+    transform: scale(0.9);
 }
 
 @media screen and (max-width: 992px) {
-    .item-poster{
-        display: none;
+    /* .item-left{
+        flex: 0.2;
     }
-
-    .item-recommend{
-        display: none;
-    }
-
-    .item-wrapper{
-        height: 200vh;
-    }
+    
+    .item-right{
+        flex: 0.8;
+    } */
 }

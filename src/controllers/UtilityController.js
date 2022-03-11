@@ -29,37 +29,8 @@ const getRandomColor = () => {
   return color;
 };
 
-const applyActiveClass = () => {
-  const first_genre_filter = document.getElementsByClassName("genre-filter")[0];
-  first_genre_filter.className += " genre-filter-active";
-};
-
-const replaceActiveClass = (genre) => {
-  const genre_filter_active = document.getElementsByClassName(
-    "genre-filter-active"
-  );
-  for (let i = 0; i < genre_filter_active.length; i++) {
-    const element = genre_filter_active[i];
-    element.className = element.className.replace("genre-filter-active", "");
-  }
-  const new_genre_filter_active = document.querySelector(
-    `[data-id="${genre}"]`
-  );
-  new_genre_filter_active.className += " genre-filter-active";
-};
-
-const setErrorTimeout = (setErrorMessage, message) => {
-  const timeout = setTimeout(() => {
-    clearTimeout(timeout);
-    setErrorMessage(message);
-  }, 2000);
-};
-
 export {
   selectRatingColor,
   selectColor,
   getRandomColor,
-  applyActiveClass,
-  replaceActiveClass,
-  setErrorTimeout,
 };

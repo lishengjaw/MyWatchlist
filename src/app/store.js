@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import searchTextReducer from "../features/searchTextSlice";
-import watchlistPaginationReducer from "../features/watchlistPaginationSlice";
+import paginationReducer from "../features/paginationSlice";
+import genreReducer from "../features/genreSlice";
 
 export default configureStore({
     reducer: {
         searchText: searchTextReducer,
-        watchlistPagination: watchlistPaginationReducer,
+        watchlistPagination: paginationReducer,
+        genre: genreReducer,
     }
 })

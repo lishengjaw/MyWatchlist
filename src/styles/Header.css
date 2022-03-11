@@ -1,32 +1,5 @@
 .navbar{
     background-color: #0d253f;
-    position: sticky;
-    top: 0;
-    z-index: 999;
-}
-
-.navbar-nav{
-    display: flex;
-    justify-content: space-evenly;
-    flex: 1;
-}
-
-.navbar-brand,
-.navbar-nav a{
-    color: whitesmoke !important;
-}
-
-.navbar-brand{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex: 0.1;
-    font-size: 1.5rem;
-}
-
-.navbar-nav a:hover{
-    transition: 0.5s ease-in-out;
-    color: #01b4e4 !important;
 }
 
 .navbar-toggler-icon{
@@ -35,4 +8,9 @@
 
 .navbar-toggler:focus{
     box-shadow: none;
+}
+
+.nav-active{
+    background-color: rgb(128, 128, 128, 0.6);
+    border-radius: 20px;
 }

@@ -3,14 +3,16 @@ import "../styles/HomePage.css";
 
 const HomePage = () => {
   return (
-    <div className="background home-page">
-      <div className="logo">
-        <a href="/movies">
+    <div className="background home-page d-flex flex-column justify-content-center align-items-center">
+      <div className="home-page-logo p-5 mb-3">
+        <a
+          href="/movies?genre=0&page=1"
+          className="text-light d-flex justify-content-center align-items-center"
+        >
           <FaFilm />
         </a>
       </div>
       <h1>MyWatchlist</h1>
-      <h5>Click on the logo to discover movies and TV shows</h5>
     </div>
   );
 };

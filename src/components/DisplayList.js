@@ -7,11 +7,11 @@ const DisplayList = ({ temp, favourites }) => {
       <div className="display-list">
         {temp.map((item) => {
           const { id } = item.data;
-          if (favourites) {
-            return <DisplayRows key={id} {...item} isFavourite={true} />;
-          } else {
-            return <DisplayRows key={id} {...item} toWatchLater={true} />;
-          }
+          return favourites ? (
+            <DisplayRows key={id} {...item} isFavourite={true} />
+          ) : (
+            <DisplayRows key={id} {...item} toWatchLater={true} />
+          );
         })}
       </div>
     </>

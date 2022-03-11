@@ -1,5 +1,3 @@
-import "../styles/ErrorPage.css";
-
 const ErrorPage = () => {
   return (
     <div className="background">

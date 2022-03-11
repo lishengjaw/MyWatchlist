@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const watchlistPaginationSlice = createSlice({
+export const paginationSlice = createSlice({
   name: "pagination",
   initialState: {
     activePage: 1,
@@ -27,10 +27,10 @@ export const {
   nextPage,
   setActivePage,
   setTotalPages,
-} = watchlistPaginationSlice.actions;
+} = paginationSlice.actions;
 
 export const selectActivePage = (state) => state.watchlistPagination.activePage;
 
 export const selectTotalPages = (state) => state.watchlistPagination.totalPages;
 
-export default watchlistPaginationSlice.reducer;
+export default paginationSlice.reducer;

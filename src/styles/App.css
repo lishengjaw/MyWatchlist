@@ -1,5 +1,48 @@
 .background{
     background-color: rgb(13, 37, 63, 0.6);
-    min-height: calc(100vh - 56px) !important;
+    min-height: calc(100vh - 57px) !important;
     padding: 20px 40px;
+}
+
+.spinner-border{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}
+
+.error{
+    display: flex;
+    height: calc(100vh - 104px);
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    text-align: center;
+    color: #0d253f;
+}
+
+.badge{
+    background-color: #0d253f !important;
+    font-size: 0.9rem;
+    margin: 0 10px 10px 0;
+}
+
+.page-header{
+    margin: 10px 0 30px;
+    text-align: center;
+    background-color: #0d253f;
+    color: whitesmoke;
+    padding: 3px 0 8px;
+    border-radius: 10px;
+}
+
+.item-ratings{
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid #0d253f;
+    font-weight: bold;
+    height: 40px;
+    width: 40px;
 }

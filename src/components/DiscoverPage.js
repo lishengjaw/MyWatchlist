@@ -1,78 +1,83 @@
-import { useEffect, useMemo, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  selectActivePage,
-  setActivePage,
-  setTotalPages,
-} from "../features/watchlistPaginationSlice";
-import SearchBar from "./SearchBar";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
+import { setActivePage, setTotalPages } from "../features/paginationSlice";
 import DiscoverList from "./DiscoverList";
+import GenreList from "./GenreList";
+import Pagination from "./Pagination";
 import {
   getDiscoverItems,
+  getItemsByGenre,
   searchDiscoverItems,
 } from "../controllers/APIController";
-import { selectSearchText } from "../features/searchTextSlice";
-import { setErrorTimeout } from "../controllers/UtilityController";
-import { debounce } from "lodash";
+import { setSearchText } from "../features/searchTextSlice";
 
 const DiscoverPage = ({ isMovie }) => {
   const [discoverList, setDiscoverList] = useState([]);
-  const [errorMessage, setErrorMessage] = useState(
-    `Loading ${isMovie ? "movies" : "TV shows"}...`
-  );
-  const activePage = useSelector(selectActivePage);
-  const searchText = useSelector(selectSearchText);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+  const pathname = window.location.pathname;
+  const hidden = pathname === "/movies" || pathname === "/tv-shows";
 
   useEffect(() => {
-    dispatch(setActivePage(1));
-  }, [dispatch, searchText]);
+    const fetchItems = async () => {
+      const page = searchParams.get("page");
+      const query = searchParams.get("query");
+      const genre = searchParams.get("genre");
 
-  const fetchItems = useMemo(
-    () =>
-      debounce(async (isListEmpty) => {
-        setErrorMessage(`Loading ${isMovie ? "movies" : "TV shows"}...`);
-        let data = null;
-        if (isListEmpty) {
-          data = await getDiscoverItems(isMovie, activePage);
-        } else {
-          data = await searchDiscoverItems(isMovie, searchText, activePage);
-        }
-        if (data.results.length > 0) {
-          setDiscoverList(data.results);
-          dispatch(setTotalPages(data.total_pages));
-          window.scrollTo({ top: 0, behaviour: "smooth" });
-        } else {
-          setDiscoverList([]);
-          setErrorTimeout(
-            setErrorMessage,
-            `No ${isMovie ? "movies" : "TV shows"} found`
-          );
-        }
-      }, 1000),
-    [dispatch, isMovie, searchText, activePage]
-  );
+      let pageInt = parseInt(page);
+      let genreInt = parseInt(genre);
 
-  useEffect(() => {
-    if (searchText.length === 0) {
-      fetchItems(true);
-    } else {
-      fetchItems(false);
-    }
-    return () => fetchItems.cancel();
-  }, [fetchItems, searchText.length]);
+      if (isNaN(pageInt)) {
+        pageInt = 1;
+      }
+      dispatch(setActivePage(pageInt));
+      if (isNaN(genreInt) || genreInt === 0) {
+        genreInt = null;
+      }
+
+      let data = null;
+      if (query) {
+        dispatch(setSearchText(query));
+        data = await searchDiscoverItems(isMovie, query, pageInt);
+      } else if (genreInt) {
+        data = await getItemsByGenre(isMovie, genre, pageInt);
+      } else {
+        data = await getDiscoverItems(isMovie, pageInt);
+      }
+      if (data.results?.length > 0) {
+        setDiscoverList(data.results);
+        dispatch(setTotalPages(data.total_pages));
+        window.scrollTo({ top: 0, behaviour: "smooth" });
+      } else {
+        setDiscoverList([]);
+      }
+      setLoading(false);
+    };
+    fetchItems();
+  }, [dispatch, isMovie, searchParams, loading]);
 
   return (
-    <div className="background">
-      <SearchBar
-        setDiscoverList={setDiscoverList}
-        setErrorMessage={setErrorMessage}
-        isMovie
-      />
-      {discoverList && discoverList.length > 0 ? (
-        <DiscoverList temp={discoverList} isMovie={isMovie} />
+    <div className="discover-page background">
+      {loading ? (
+        <Spinner animation="border" variant="dark" />
       ) : (
-        <h1 className="discover-no-search-results">{errorMessage}</h1>
+        <>
+          {discoverList?.length > 0 ? (
+            <>
+              <h1 className="page-header">{`${
+                isMovie ? "Movies" : "TV Shows"
+              }`}</h1>
+              {hidden && <GenreList isMovie={isMovie} />}
+              <DiscoverList temp={discoverList} isMovie={isMovie} />
+              <Pagination />
+            </>
+          ) : (
+            <h1 className="error">No results</h1>
+          )}
+        </>
       )}
     </div>
   );

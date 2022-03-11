@@ -20,16 +20,15 @@ const DisplayRows = (props) => {
   const navigate = useNavigate();
 
   const removeItem = debounce(() => {
-    if(isFavourite){
+    if (isFavourite) {
       removeFromFavourites(props.data);
-    }
-    else{
+    } else {
       removeFromWatchLater(props.data);
     }
   }, 500);
 
   return (
-    <div className="display-row">
+    <div className="display-row d-flex mb-3 p-3">
       <div
         className="display-row-left"
         onClick={() => {
@@ -37,6 +36,7 @@ const DisplayRows = (props) => {
         }}
       >
         <Image
+          className="h-100"
           src={
             poster_path
               ? `${process.env.REACT_APP_POSTER_PATH}${poster_path}`
@@ -44,15 +44,14 @@ const DisplayRows = (props) => {
           }
         />
       </div>
-
       <div
-        className="display-row-center"
+        className="display-row-center d-flex flex-column justify-content-center"
         onClick={() => {
           isMovie ? navigate(`/movies/${id}`) : navigate(`/tv-shows/${id}`);
         }}
       >
-        <h4>{title || name}</h4>
-        <div>
+        <h6>{title || name}</h6>
+        <div className="d-flex flex-wrap">
           {genre_list?.map((genre, index) => (
             <Badge pill key={index}>
               {genre}
@@ -60,9 +59,11 @@ const DisplayRows = (props) => {
           ))}
         </div>
       </div>
-
-      <div className="display-row-right">
-        <h6 style={{ backgroundColor: selectRatingColor(vote_average) }}>
+      <div className="display-row-right d-flex justify-content-center align-items-center">
+        <h6
+          className="item-ratings"
+          style={{ backgroundColor: selectRatingColor(vote_average) }}
+        >
           {parseFloat(vote_average).toFixed(1)}
         </h6>
         {isFavourite ? (

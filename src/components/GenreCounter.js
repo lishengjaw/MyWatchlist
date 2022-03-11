@@ -6,8 +6,7 @@ import { getRandomColor } from "../controllers/UtilityController";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const GenreCounter = (props) => {
-  const { temp } = props;
+const GenreCounter = ({ temp }) => {
   const [genreList, setGenreList] = useState(null);
   const [genreData, setGenreData] = useState({
     labels: [],
@@ -53,14 +52,14 @@ const GenreCounter = (props) => {
         ],
       });
     };
-    if(genreList){
+    if (genreList) {
       generatePieChartData();
     }
   }, [genreList]);
 
   return (
-    <div className="genre-counter">
-      <h2>Genres</h2>
+    <div className="genre-counter p-3">
+      <h2 className="text-light mb-3">Genres</h2>
       <Doughnut
         data={{
           labels: genreData.labels,
@@ -69,9 +68,7 @@ const GenreCounter = (props) => {
         options={{
           plugins: {
             legend: {
-              labels: {
-                color: "whitesmoke",
-              },
+              display: false,
             },
           },
         }}

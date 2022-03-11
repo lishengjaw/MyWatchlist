@@ -1,19 +1,11 @@
-.list-no-search-results{
-    display: flex;
-    height: calc(100vh - 104px);
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
-    text-align: center;
-    color: #0d253f;
-}
-
 .display-list{
     flex: 0.7;
+    margin-left: 2rem;
 }
 
 @media screen and (max-width: 768px) {
     .display-list{
         flex: 1;
+        margin-left: 0;
     }
 }
