@@ -64,7 +64,7 @@
 
 .item-recommendations{
     position: absolute;
-    top: calc(90vh + 1px);
+    top: 100%;
     background-color: rgb(13, 37, 63, 0.6);
 }
 
@@ -74,14 +74,4 @@
 
 .item-recommendation-card{
     transform: scale(0.9);
-}
-
-@media screen and (max-width: 992px) {
-    /* .item-left{
-        flex: 0.2;
-    }
-    
-    .item-right{
-        flex: 0.8;
-    } */
 }
