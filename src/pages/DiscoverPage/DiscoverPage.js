@@ -3,14 +3,14 @@ import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import { setActivePage, setTotalPages } from "../../features/paginationSlice";
-import DiscoverList from "../../components/DiscoverList";
-import GenreList from "../../components/GenreList";
-import Pagination from "../../components/Pagination";
+import DiscoverList from "../../components/DiscoverList/DiscoverList";
+import GenreList from "../../components/GenreList/GenreList";
+import Pagination from "../../components/Pagination/Pagination";
 import {
   getDiscoverItems,
   getItemsByGenre,
   searchDiscoverItems,
-} from "../../controllers/APIController";
+} from "../../api/APIController";
 import { setSearchText } from "../../features/searchTextSlice";
 
 const DiscoverPage = ({ isMovie }) => {

@@ -1,10 +1,10 @@
-import "../styles/DisplayRows.css";
+import "./DisplayRows.css";
 import { FaHeart, FaBookmark } from "react-icons/fa";
 import { Badge, Image } from "react-bootstrap";
 import {
   removeFromFavourites,
   removeFromWatchLater,
-} from "../../controllers/DBController";
+} from "../../db/DBController";
 import { useNavigate } from "react-router-dom";
 import {
   selectColor,

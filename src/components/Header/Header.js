@@ -1,7 +1,7 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
-import "../styles/Header.css";
+import "./Header.css";
 import { FaFilm } from "react-icons/fa";
-import SearchBar from "../SearchBar";
+import SearchBar from "../SearchBar/SearchBar";
 import headerList from "../../data/header-list";
 
 const Header = () => {

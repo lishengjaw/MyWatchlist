@@ -1,5 +1,5 @@
 import { FaFilm } from "react-icons/fa";
-import "../styles/HomePage.css";
+import "./HomePage.css";
 
 const HomePage = () => {
   return (

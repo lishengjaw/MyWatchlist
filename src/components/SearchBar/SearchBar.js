@@ -1,11 +1,11 @@
 import { FaSearch } from "react-icons/fa";
-import "../styles/SearchBar.css";
+import "./SearchBar.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectSearchText,
   setSearchText,
   clearSearchText,
-} from "../features/searchTextSlice";
+} from "../../features/searchTextSlice";
 import {
   Form,
   FormControl,
@@ -16,7 +16,7 @@ import {
 } from "react-bootstrap";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { setActivePage } from "../features/paginationSlice";
+import { setActivePage } from "../../features/paginationSlice";
 
 const SearchBar = () => {
   const [searchType, setSearchType] = useState("Movies");

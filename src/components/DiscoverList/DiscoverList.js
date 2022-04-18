@@ -2,8 +2,8 @@ import {
   checkInFavourites,
   checkInWatchLater,
 } from "../../db/DBController";
-import ItemCard from "../ItemCard";
-import "../styles/DiscoverList.css";
+import ItemCard from "../ItemCard/ItemCard";
+import "./DiscoverList.css";
 
 const DiscoverList = ({ temp }) => {
   return (

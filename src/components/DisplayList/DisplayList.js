@@ -1,5 +1,5 @@
-import DisplayRows from "./DisplayRows";
-import "../styles/DisplayList.css";
+import DisplayRows from "../DisplayRows/DisplayRows";
+import "./DisplayList.css";
 
 const DisplayList = ({ temp, favourites }) => {
   return (

@@ -1,5 +1,5 @@
 import { Card } from "react-bootstrap";
-import "../styles/ItemCard.css";
+import "./ItemCard.css";
 import { FaHeart, FaBookmark } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import {
@@ -7,12 +7,12 @@ import {
   addToWatchLater,
   removeFromFavourites,
   removeFromWatchLater,
-} from "../controllers/DBController";
+} from "../../db/DBController";
 import { useNavigate } from "react-router";
 import {
   selectColor,
   selectRatingColor,
-} from "../controllers/UtilityController";
+} from "../../helpers/UtilityController";
 import { debounce } from "lodash";
 
 const WatchlistCard = (props) => {

@@ -1,10 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import Header from "./components/Header";
-import HomePage from "./components/HomePage";
-import DiscoverPage from "./components/DiscoverPage";
-import ItemPage from "./components/ItemPage";
-import FavouritesAndWatchLaterPage from "./components/FavouritesAndWatchLaterPage";
-import ErrorPage from "./components/ErrorPage";
+import Header from "./components/Header/Header";
+import HomePage from "./pages/HomePage/HomePage";
+import DiscoverPage from "./pages/DiscoverPage/DiscoverPage";
+import ItemPage from "./pages/ItemPage/ItemPage";
+import FavouritesAndWatchLaterPage from "./pages/FavouritesAndWatchLaterPage/FavouritesAndWatchLaterPage";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import "./styles/App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 

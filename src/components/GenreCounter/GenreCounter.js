@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import "../styles/GenreCounter.css";
+import "./GenreCounter.css";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import { getRandomColor } from "../controllers/UtilityController";
+import { getRandomColor } from "../../helpers/UtilityController";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

@@ -1,4 +1,4 @@
-import "../styles/ItemPage.css";
+import "./ItemPage.css";
 import { useEffect, useState } from "react";
 import { FaHeart, FaBookmark, FaVideo } from "react-icons/fa";
 import {
@@ -8,20 +8,20 @@ import {
   checkInWatchLater,
   removeFromFavourites,
   removeFromWatchLater,
-} from "../../controllers/DBController";
+} from "../../db/DBController";
 import {
   getCastsAndDirectors,
   getItemById,
   getRecommendedMoviesAndTVShows,
   getVideo,
-} from "../../controllers/APIController";
-import ItemCard from "../../components/ItemCard";
+} from "../../api/APIController";
+import ItemCard from "../../components/ItemCard/ItemCard";
 import { useLocation } from "react-router-dom";
 import { Badge, Spinner, Button, Image } from "react-bootstrap";
 import {
   selectColor,
   selectRatingColor,
-} from "../../controllers/UtilityController";
+} from "../../helpers/UtilityController";
 import { debounce } from "lodash";
 
 const ItemPage = () => {
