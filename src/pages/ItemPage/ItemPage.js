@@ -8,20 +8,20 @@ import {
   checkInWatchLater,
   removeFromFavourites,
   removeFromWatchLater,
-} from "../controllers/DBController";
+} from "../../controllers/DBController";
 import {
   getCastsAndDirectors,
   getItemById,
   getRecommendedMoviesAndTVShows,
   getVideo,
-} from "../controllers/APIController";
-import ItemCard from "./ItemCard";
+} from "../../controllers/APIController";
+import ItemCard from "../../components/ItemCard";
 import { useLocation } from "react-router-dom";
 import { Badge, Spinner, Button, Image } from "react-bootstrap";
 import {
   selectColor,
   selectRatingColor,
-} from "../controllers/UtilityController";
+} from "../../controllers/UtilityController";
 import { debounce } from "lodash";
 
 const ItemPage = () => {

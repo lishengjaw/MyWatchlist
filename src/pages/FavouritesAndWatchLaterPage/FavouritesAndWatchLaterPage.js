@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
-import { db } from "../firebase";
-import DisplayList from "./DisplayList";
-import GenreCounter from "./GenreCounter";
+import { db } from "../../firebase";
+import DisplayList from "../../components/DisplayList";
+import GenreCounter from "../../components/GenreCounter";
 
 const FavouritesAndWatchLaterPage = ({ isFavourite }) => {
   const [itemList, setItemList] = useState([]);

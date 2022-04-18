@@ -4,12 +4,12 @@ import { Badge, Image } from "react-bootstrap";
 import {
   removeFromFavourites,
   removeFromWatchLater,
-} from "../controllers/DBController";
+} from "../../controllers/DBController";
 import { useNavigate } from "react-router-dom";
 import {
   selectColor,
   selectRatingColor,
-} from "../controllers/UtilityController";
+} from "../../helpers/UtilityController";
 import { debounce } from "lodash";
 
 const DisplayRows = (props) => {

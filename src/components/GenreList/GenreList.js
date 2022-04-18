@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { getGenres } from "../controllers/APIController";
+import { getGenres } from "../../apis/APIController";
 import { Badge } from "react-bootstrap";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import "../styles/GenreList.css";
 import { useNavigate } from "react-router-dom";
-import { setActivePage } from "../features/paginationSlice";
+import { setActivePage } from "../../features/paginationSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { selectGenre, setGenre } from "../features/genreSlice";
+import { selectGenre, setGenre } from "../../features/genreSlice";
 
 const GenreFilters = ({ isMovie }) => {
   const [genres, setGenres] = useState([]);

@@ -1,8 +1,8 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 import "../styles/Header.css";
 import { FaFilm } from "react-icons/fa";
-import SearchBar from "./SearchBar";
-import headerList from "../data/header-list";
+import SearchBar from "../SearchBar";
+import headerList from "../../data/header-list";
 
 const Header = () => {
   const pathname = `/${window.location.pathname.split("/")[1]}`;

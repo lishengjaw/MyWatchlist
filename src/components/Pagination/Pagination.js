@@ -7,9 +7,9 @@ import {
   nextPage,
   setActivePage,
   selectTotalPages,
-} from "../features/paginationSlice";
+} from "../../features/paginationSlice";
 import { useNavigate } from "react-router-dom";
-import { selectGenre } from "../features/genreSlice";
+import { selectGenre } from "../../features/genreSlice";
 
 const PageNumbers = () => {
   const activePage = useSelector(selectActivePage);

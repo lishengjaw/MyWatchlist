@@ -1,6 +1,6 @@
 import { db } from "../firebase";
 import firebase from "firebase";
-import { getItemById } from "./APIController";
+import { getItemById } from "../api/APIController";
 
 const checkInFavourites = (id) => {
   return db

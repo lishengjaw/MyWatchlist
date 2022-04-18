@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
-import { setActivePage, setTotalPages } from "../features/paginationSlice";
-import DiscoverList from "./DiscoverList";
-import GenreList from "./GenreList";
-import Pagination from "./Pagination";
+import { setActivePage, setTotalPages } from "../../features/paginationSlice";
+import DiscoverList from "../../components/DiscoverList";
+import GenreList from "../../components/GenreList";
+import Pagination from "../../components/Pagination";
 import {
   getDiscoverItems,
   getItemsByGenre,
   searchDiscoverItems,
-} from "../controllers/APIController";
-import { setSearchText } from "../features/searchTextSlice";
+} from "../../controllers/APIController";
+import { setSearchText } from "../../features/searchTextSlice";
 
 const DiscoverPage = ({ isMovie }) => {
   const [discoverList, setDiscoverList] = useState([]);
